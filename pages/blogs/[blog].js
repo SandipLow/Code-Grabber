@@ -35,7 +35,7 @@ const Blog = (props) => {
             <Navbar />
 
             {/* body */}
-            <div ref={main} className="bg-slate-700 text-slate-100">
+            <div ref={main} className="bg-gray-700 text-gray-100">
                 {/* content */}
             </div>
         </>
