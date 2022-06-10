@@ -6,7 +6,7 @@ const PostCard = (props) => {
     const {title, shortDesc, img, dark, slug} = props;
 
     return (
-        <Link href={slug===undefined?"#":`blogs/${slug}`} pass>
+        <Link href={`blogs/${slug}`} pass>
         <div className={`cursor-pointer m-4 p-4 rounded-md ${dark?"bg-gray-700":"bg-gray-800"} text-slate-100 flex text-center w-96`}>
             <img src={img} alt="js" className="h-28 p-3 bg-purple-200 rounded"/>
             <div className="p-4 w-full">

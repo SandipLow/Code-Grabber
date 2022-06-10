@@ -30,9 +30,10 @@ const Blog = (props) => {
                 <title>{data && data.title} | Code Grabber</title>
                 <meta name="description" content={data && data.metadesc} />
                 <link rel="stylesheet" href="/styles/blog.module.css" />
+                <link rel="manifest" href="/manifest.webmanifest" />
             </Head>
 
-            <Navbar />
+            {/* <Navbar /> */}
 
             {/* body */}
             <div ref={main} className="bg-gray-700 text-gray-100">
