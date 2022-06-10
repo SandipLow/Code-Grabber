@@ -1,7 +1,7 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
 const upload = multer();
-// const sharp = require("sharp")
+const sharp = require("sharp")
 const path = require("path")
 
 // apiroute declaration :
