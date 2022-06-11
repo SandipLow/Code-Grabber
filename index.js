@@ -30,8 +30,9 @@ app.get('/', (req, res)=>{
     res.send('Hello Express...!!');
 })
 
-// app.use('/api/auth', require('./routes/auth'))
+app.use('/api/auth', require('./routes/auth'));
 app.use('/api/blogs', require('./routes/blogs'));
+app.use('/api/assets', require('./routes/assets'));
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

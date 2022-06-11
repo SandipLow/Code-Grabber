@@ -19,7 +19,6 @@ const BlogSchema = new Schema({
     },
     tags : {
         type: Array,
-        default: "General"
     },
     slug : {
         type: String, 
