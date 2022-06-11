@@ -21,7 +21,7 @@ conn.once('open', () => {
 // ROUTE 1: add a Asset using POST: "/api/assets/addasset". Log in required...
 router.post('/addasset', fetchUser, upload.single("file"), async (req, res)=>{
     if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `https://code-grabber.heroku.com/api/assets/getasset/${req.file.filename}`;
+    const imgUrl = `https://code-grabber.herokuapp.com/api/assets/getasset/${req.file.filename}`;
     res.send(imgUrl);
 })
 // router.post('/addasset', fetchUser, async (req, res)=>{
@@ -40,11 +40,15 @@ router.get("/getasset/:filename", async (req, res) => {
             return;
         }
 
-        if(file.contentType === 'image/jpeg' || file.contentType ==='image/png') {
+        // if(file.contentType === 'image/jpeg' || file.contentType ==='image/png' || file.contentType === 'image/webp') {
 
             const readStream = gridfsBucket.openDownloadStream(file._id);
             readStream.pipe(res);
-        }
+        // }
+
+        // else {
+        //     res.send("Till now only image files you get...!")
+        // }
 
     } catch (error) {
         console.log(error);
