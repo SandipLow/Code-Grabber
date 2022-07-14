@@ -1,6 +1,5 @@
 // react and components :
 import Head from 'next/head'
-import Navbar from '../components/Navbar'
 import { useEffect, useRef, useState } from 'react';
 
 // prismjs :
@@ -46,7 +45,7 @@ const Blog = (props) => {
 export default Blog
 
 export async function getServerSideProps(context) {
-    let fet = await fetch(`https://code-grabber.herokuapp.com/api/blogs/getblog/${context.query.blog}`);
+    let fet = await fetch(`${process.env.BACKEND_HOST}/api/blogs/getblog/${context.query.blog}`);
 
     let data;
 

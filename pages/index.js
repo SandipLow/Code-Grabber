@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Head from 'next/head'
-import Navbar from "./components/Navbar";
 import PostCard from './components/PostCard';
 
 export default function Home(props) {
@@ -66,10 +65,10 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(context) {
-  let fet = await fetch(`https://code-grabber.herokuapp.com/api/blogs/recents`);
+  let fet = await fetch(`${process.env.BACKEND_HOST}/api/blogs/recents`);
   let recentPosts = await fet.json();
 
-  let fet2 = await fetch(`https://code-grabber.herokuapp.com/api/blogs/populars`);
+  let fet2 = await fetch(`${process.env.BACKEND_HOST}/api/blogs/populars`);
   let popularPosts = await fet2.json();
 
   return {

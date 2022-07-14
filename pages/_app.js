@@ -10,10 +10,8 @@ function MyApp({ Component, pageProps }) {
       <link rel="icon" href="/icon-256x256.png" type="image/x-icon" />
       <link rel="manifest" href="/manifest.webmanifest" />
     </Head>
-    <div className="bg-gray-700 text-gray-100">
-      <Navbar/>
-      <Component {...pageProps} />
-    </div>
+    <Navbar/>
+    <Component {...pageProps} />
     </>
   )
   
