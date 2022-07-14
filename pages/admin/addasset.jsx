@@ -47,7 +47,7 @@ const AddAssetSection = () => {
         let formdata = new FormData();
         formdata.set("file", file);
 
-        fetch("http://localhost:5000/api/assets/addasset", {
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/assets/addasset`, {
             method: "POST",
             body: formdata,
             headers: headersList
@@ -98,7 +98,7 @@ const DeleteAssetSection = () => {
             "auth-token": localStorage.getItem("auth-token")
         }
 
-        fetch(`http://localhost:5000/api/assets/deleteasset/${document.getElementById("image_url_to_be_deleted").value}`, {
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/assets/deleteasset/${document.getElementById("image_url_to_be_deleted").value}`, {
             method: "DELETE",
             headers: headersList
         }).then(function (response) {

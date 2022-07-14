@@ -45,7 +45,7 @@ const Blog = (props) => {
 export default Blog
 
 export async function getServerSideProps(context) {
-    let fet = await fetch(`${process.env.BACKEND_HOST}/api/blogs/getblog/${context.query.blog}`);
+    let fet = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/getblog/${context.query.blog}`);
 
     let data;
 

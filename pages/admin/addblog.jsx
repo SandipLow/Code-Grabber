@@ -49,7 +49,7 @@ const Add_Blog = () => {
             "Content-Type": "application/json"
         }
 
-        let res = await fetch("http://localhost:5000/api/blogs/addblog", { 
+        let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/addblog`, { 
             method: "POST",
             body: JSON.stringify(formData),
             headers: headersList
