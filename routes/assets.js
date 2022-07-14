@@ -57,8 +57,8 @@ router.get("/getasset/:filename", async (req, res) => {
 });
 
 
-// ROUTE 3: add a Asset using DELETe: "/api/assets/deleteasset/:filename". no Log in required...
-router.delete("/deleteasset/:filename", async (req, res) => {
+// ROUTE 3: add a Asset using DELETe: "/api/assets/deleteasset/:filename". Log in required...
+router.delete("/deleteasset/:filename",fetchUser, async (req, res) => {
     try {
         await gfs.files.deleteOne({ filename: req.params.filename });
         res.send("success");

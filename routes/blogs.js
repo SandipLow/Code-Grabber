@@ -38,7 +38,7 @@ router.get('/populars', async (req, res) => {
     res.json(blogs);
 })
 
-// ROUTE 5: add a blog using POST: "/api/auth/addnote". Log in required...
+// ROUTE 5: add a blog using POST: "/api/blogs/addblog". Log in required...
 router.post('/addblog', fetchUser, [
 
     // Validation array
@@ -47,26 +47,31 @@ router.post('/addblog', fetchUser, [
 
 ], async (req, res) => {
     
-    // Errors in a single json...
-    const errors = validationResult(req);
+    try {
+        // Errors in a single json...
+        const errors = validationResult(req);
 
-    // If there error return the error json...
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        // If there error return the error json...
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        // Create blog...
+        const blog = await Blog.create({
+            title : req.body.title,
+            content : req.body.content,
+            description : req.body.description,
+            likes : 0,
+            tags : req.body.tags,
+            slug : req.body.slug,
+            img : req.body.img,
+        })
+
+        res.send(blog);
+    } catch (e) {
+        console.log(e);
+        res.status(503).send("Sorry Some Server Issue")
     }
-
-    // Create blog...
-    const blog = await Blog.create({
-        title : req.body.title,
-        content : req.body.content,
-        description : req.body.description,
-        likes : 0,
-        tags : req.body.tags,
-        slug : req.body.slug,
-        img : req.body.img,
-    })
-
-    res.send(blog);
 })
 
 
