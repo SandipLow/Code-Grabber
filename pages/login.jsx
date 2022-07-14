@@ -26,7 +26,7 @@ export default function Login(props) {
       "Content-Type": "application/json"
       }
 
-      let res = await fetch("http://localhost:5000/api/auth/login", { 
+      let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/auth/login`, { 
         method: "POST",
         body: JSON.stringify(form),
         headers: headersList
