@@ -24,11 +24,6 @@ router.post('/addasset', fetchUser, upload.single("file"), async (req, res)=>{
     const imgUrl = `https://code-grabber.herokuapp.com/api/assets/getasset/${req.file.filename}`;
     res.send(imgUrl);
 })
-// router.post('/addasset', fetchUser, async (req, res)=>{
-//     res.send("success");
-// })
-
-
 
 // ROUTE 2: add a Asset using GET: "/api/assets/getasset/:filename". no Log in required...
 router.get("/getasset/:filename", async (req, res) => {
@@ -55,7 +50,6 @@ router.get("/getasset/:filename", async (req, res) => {
         res.send("not found");
     }
 });
-
 
 // ROUTE 3: add a Asset using DELETe: "/api/assets/deleteasset/:filename". Log in required...
 router.delete("/deleteasset/:filename",fetchUser, async (req, res) => {

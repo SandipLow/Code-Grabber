@@ -35,5 +35,5 @@ app.use('/api/blogs', require('./routes/blogs'));
 app.use('/api/assets', require('./routes/assets'));
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Example app listening at PORT : ${port}`);
 })

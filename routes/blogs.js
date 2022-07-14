@@ -74,5 +74,51 @@ router.post('/addblog', fetchUser, [
     }
 })
 
+// ROUTE 6: edit a blog using PUT: "/api/blogs/editblog/:id". Log in required...
+router.put('/editblog/:id', fetchUser, [
+
+    // Validation Array
+    body("title", "Title length must be >= 3").isLength({ min: 3}),
+    body("description", "description length must be >= 5").isLength({ min: 5})
+
+], async (req, res) => {
+
+    try {
+        // Errors in a single json...
+        const errors = validationResult(req);
+
+        // If there error return the error json...
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const update = {
+            title : req.body.title,
+            content : req.body.content,
+            description : req.body.description,
+            tags : req.body.tags,
+            slug : req.body.slug,
+            img : req.body.img,
+            date_modified : Date.now()
+        };
+
+        const updatedBlog = await Blog.findOneAndUpdate(req.params.id, {$set : update}, {new : true});
+
+        res.json(updatedBlog);
+
+    } catch (e) {
+        console.log(e);
+        res.status(503).send("Sorry Some Server Issue")
+    }
+})
+
+// ROUTE 7: delete a blog using DELETE: "/api/blogs/deleteblog/:id". Log in required...
+router.delete('/deleteblog/:id', fetchUser, async (req, res) => {
+    
+    await Blog.findByIdAndDelete(req.params.id);
+    res.send("blog has been deleted")
+    
+})
+
 
 module.exports = router;
