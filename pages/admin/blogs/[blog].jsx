@@ -3,6 +3,15 @@ import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react';
 import CheckAuth from '../check_auth';
 
+// prismjs :
+import Prism from 'prismjs'
+import 'prismjs/plugins/toolbar/prism-toolbar.min.css'
+import 'prismjs/plugins/toolbar/prism-toolbar.min.js'
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min'
+import 'prismjs/components/prism-java.min';
+import 'prismjs/components/prism-markup-templating'
+import 'prismjs/components/prism-php';
+
 const Blog = (props) => {
 
     const [formData, setFormData] = useState(props.formData);
@@ -15,16 +24,12 @@ const Blog = (props) => {
         if (typeof(formData.tags)=='object') {
 
             let tags = formData.tags.map((tag, ind) => {
-                return <input className=' text-gray-800' key={ind} value={tag} onChange={(e)=>{
+                return <input className=' bg-gray-800 p-2 mx-2 mb-2 rounded' key={ind} value={tag} onChange={(e)=>{
                     let temp = formData.tags;
                     temp[ind] = e.target.value;
                     setFormData({
-                        title : formData.title,
-                        content : formData.content,
-                        description : formData.description,
-                        tags : temp,
-                        slug : formData.slug,
-                        img : formData.img 
+                        ...formData,
+                        tags : temp
                     })
                 }} />
             })
@@ -44,14 +49,16 @@ const Blog = (props) => {
             "Content-Type": "application/json"
         }
         
-        fetch("http://localhost:5000/api/blogs/editblog/62a883161e04047c93796e7f", { 
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/editblog/${formData._id}`, { 
             method: "PUT",
             body: JSON.stringify(formData),
             headers: headersList
         }).then(function(response) {
+            if (response.status != 200) return;
+
             return response.text();
         }).then(function(data) {
-            document.getElementById("result").innerText = data;
+            document.getElementById("result").innerText = data? "success" : "failed, some error occured";
             // console.log(data);
         })
     }
@@ -59,81 +66,101 @@ const Blog = (props) => {
     return (
         <>
         <Head>
-            <title>Add Blog | Code Grabber</title>
+            <title>Edit Blog | Code Grabber</title>
+            <link rel="stylesheet" href="/styles/blog.module.css" />
         </Head>
 
         <CheckAuth/>
 
-        <form onSubmit={updateBlog} action="submit">
-            <label htmlFor="title">Title : </label>
-            <input className=' text-gray-800' id='title' type="text" value={formData.title} onChange={(e)=>{
-                setFormData({
-                    ...formData,
-                    title : e.target.value
-                })
-            }} /><br />
-
-            <label htmlFor="content">Content : </label><br />
-            <textarea className=' text-gray-800 w-full' id='content' value={formData.content} onChange={(e)=>{
-                setFormData({
-                    ...formData,
-                    content : e.target.value
-                })
-            }} /><br />
-
-            <label htmlFor="description">Description : </label><br />
-            <textarea className=' text-gray-800 w-full' id='description' value={formData.description} onChange={(e)=>{
-                setFormData({
-                    ...formData,
-                    description : e.target.value
-                })
-            }} /><br />
-
-            <label htmlFor="tags">Tags : </label>
-            { tags }
+        <form className='p-4' onSubmit={updateBlog} action="submit">
+            <div className='my-4'>
+                <label className=' font-semibold text-lg' htmlFor="title" >Title : </label>
+                <input className=' bg-gray-800 h-8 p-2 mx-6 w-64 rounded' id='title' type="text" value={formData.title} onChange={(e)=>{
+                    setFormData({
+                        ...formData,
+                        title : e.target.value
+                    })
+                }} />
+            </div>
             
-            <button onClick={(e)=>{
-                e.preventDefault()
-                let temp = [...formData.tags];
-                temp = [...temp, "Add Tag"]
+            <div className="my-4">
+                <label className=' font-semibold text-lg' htmlFor="content">Content : </label><br />
+                <textarea className='bg-gray-800 h-96 w-full p-4 mt-4 rounded' id='content' value={formData.content} onChange={(e)=>{
+                    setFormData({
+                        ...formData,
+                        content : e.target.value
+                    })
 
-                setFormData({
-                    ...formData,
-                    tags : temp
-                })
-                
-            }}>+</button>
-            <button onClick={(e)=>{
-                e.preventDefault()
-                let temp = [...formData.tags];
-                temp.pop()
+                    document.getElementById("view_blog").innerHTML = e.target.value;
+                    Prism.highlightAllUnder(document.getElementById("view_blog"))
+                }} />
+            </div>
 
-                setFormData({
-                    ...formData,
-                    tags : temp
-                })
-                
-            }}>-</button><br />
-            
-            <label htmlFor='slug' >Slug : </label>
-            <input className=' text-gray-800' id='slug' type="text" value={formData.slug} onChange={(e)=>{
-                setFormData({
-                    ...formData,
-                    slug : e.target.value
-                })
-            }} /><br />
-            
-            <label htmlFor='img' >Image icon : </label>
-            <input className=' text-gray-800 mt-1' id='img' type="text" value={formData.img} onChange={(e)=>{
-                setFormData({
-                    ...formData,
-                    img : e.target.value
-                })
-            }} /><br />
-            <button className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded" type="submit">Submit</button>
+            <div className="my-4">
+                <label className=' font-semibold text-lg' htmlFor="description">Description : </label><br />
+                <textarea className=' bg-gray-800 w-full p-4 mt-4 rounded' id='description' value={formData.description} onChange={(e)=>{
+                    setFormData({
+                        ...formData,
+                        description : e.target.value
+                    })
+                }} />
+            </div>
+
+            <div className="my-4">
+                <label className=' font-semibold text-lg' htmlFor="tags">Tags : </label>
+                { tags }
+                <button onClick={(e)=>{
+                    e.preventDefault()
+                    let temp = [...formData.tags];
+                    temp = [...temp, "Add Tag"]
+
+                    setFormData({
+                        ...formData,
+                        tags : temp
+                    })
+                    
+                }}>+</button>
+                <button onClick={(e)=>{
+                    e.preventDefault()
+                    let temp = [...formData.tags];
+                    temp.pop()
+
+                    setFormData({
+                        ...formData,
+                        tags : temp
+                    })
+                    
+                }}>-</button>
+            </div>
+
+            <div className="my-4">
+                <label className=' font-semibold text-lg' htmlFor='slug' >Slug : </label>
+                <input className=' bg-gray-800 p-2 mx-2 rounded' id='slug' type="text" value={formData.slug} onChange={(e)=>{
+                    setFormData({
+                        ...formData,
+                        slug : e.target.value
+                    })
+                }} />
+            </div>
+
+            <div className="my-4">
+                <label className=' font-semibold text-lg' htmlFor='img' >Image icon : </label><br />
+                <input className=' bg-gray-800 my-4 px-2 h-10 rounded w-full max-w-xl' id='img' type="text" value={formData.img} onChange={(e)=>{
+                    setFormData({
+                        ...formData,
+                        img : e.target.value
+                    })
+                }} />
+
+                <img src={formData.img} className="h-32" alt="preview-image" />
+            </div>
+
+            <button className="bg-purple-800 text-yellow-100 p-2 my-4 rounded" type="submit">Submit</button>
         </form>
 
-        <span className='font-sm text-green-500' id='result'></span>
+        <span className='font-sm text-green-500 m-6' id='result'></span>
+        <hr className='my-6' />
+        <div className='mt-12' id='view_blog'></div>
         </>
     )
 }

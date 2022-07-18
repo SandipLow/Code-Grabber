@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
-import PostCard from '../components/PostCard'
+import PostCard from '../../components/PostCard'
 
 const ManageBlogs = () => {
 
@@ -20,7 +20,7 @@ const ManageBlogs = () => {
         }).then(function (response) {
             return response.text();
         }).then(function (data) {
-            document.getElementById("delete_op_result").innerText = data;
+            document.getElementById(`delete_op_result_${id}`).innerText = data;
             // console.log(data);
         })
     }
@@ -33,7 +33,7 @@ const ManageBlogs = () => {
                     <button onClick={() => delete_blog(blog._id)} className='bg-white rounded-full text-lg mx-4 px-3 py-2 transition hover:bg-gray-500'>🗑️</button>
                     <Link href={`blogs/${blog.slug}`}><button className='bg-white rounded-full text-lg mx-4 px-3 py-2 transition hover:bg-gray-500'>✍🏼</button></Link>
                 </div>
-                <span className='text-sm text-green-400 mx-7' id='delete_op_result' ></span>
+                <span className='text-sm text-green-400 mx-7' id={`delete_op_result_${blog._id}`} ></span>
             </div>
         ) 
     })
