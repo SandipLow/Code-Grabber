@@ -102,7 +102,7 @@ router.put('/editblog/:id', fetchUser, [
             date_modified : Date.now()
         };
 
-        const updatedBlog = await Blog.findOneAndUpdate(req.params.id, {$set : update}, {new : true});
+        const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, {$set : update}, {new : true});
 
         res.json(updatedBlog);
 
