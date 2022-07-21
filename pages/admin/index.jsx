@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import Link from 'next/link';
 import CheckAuth from './check_auth';
+import { store } from '../../state/store';
 
 export default function Admin() {
 
@@ -18,7 +19,7 @@ export default function Admin() {
         </Head>
 
         <div className='flex'>
-            <h1 className='text-2xl my-5 mx-2 font-bold'>Welcome Admin</h1>
+            <h1 className='text-2xl my-5 mx-2 font-bold'>Welcome <span className=' mx-3 text-green-300' >{store.getState().auth.name}</span></h1>
             <button onClick={logout} className="bg-purple-800 text-yellow-100 p-2 my-4 mx-12 rounded transition hover:bg-purple-900">Log out</button>
         </div><hr />
 

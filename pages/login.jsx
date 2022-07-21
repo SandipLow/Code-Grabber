@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
-
 import Head from 'next/head'
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {actionCreators} from '../state'
+import { store } from '../state/store';
 
 export default function Login(props) {
 
   const [form, setForm] = useState({ email: "", password: "" })
   const [authState, setAuthState] = useState(null)
+  const dispatch = useDispatch();
+  const { logIn, logOut } = bindActionCreators(actionCreators, dispatch);
 
   useEffect(() => {
     let authtoken = localStorage.getItem("auth-token")
@@ -14,6 +19,7 @@ export default function Login(props) {
     if (authtoken != undefined) {
       setAuthState(authtoken);
     }
+
   }, [])
 
   const login = async (e) => {
@@ -40,18 +46,23 @@ export default function Login(props) {
       }
 
       let tokenstring = await res.text()
-
       let token = JSON.parse(tokenstring).authtoken;
 
       localStorage.setItem("auth-token", token)
+      localStorage.setItem("user", JSON.stringify({
+        name : form.email
+      }))
 
+      logIn(localStorage.getItem("user"));
       setAuthState(token);
 
-      // console.log(localStorage.getItem("auth-token"));
+
+      // console.log(store.getState())
 
     }
     catch (err) {
-      alert("Ooops Something went wrong \n(Kindly Share the screenshot or any photo if you are seeing this please) : \n", err)
+      alert("Ooops Something went wrong \n(Kindly Share the screenshot or any photo if you are seeing this please) : \n", err.toString())
+      console.log(err);
     }
 
     setForm({ email: "", password: "" })
@@ -59,7 +70,12 @@ export default function Login(props) {
 
   const logout = () => {
     localStorage.removeItem("auth-token");
+    localStorage.removeItem("user");
+
+    logOut();
     setAuthState(null);
+
+    // console.log(store.getState())
   }
 
   return (
@@ -78,11 +94,11 @@ export default function Login(props) {
           <div className="flex justify-center p-4 ">
             {authState ?
               <div className='text-center w-64'>
-                <p>Logged In...</p><br />
+                <p>Logged In as {store.getState().auth.name}</p><br />
                 <Link href="/admin" passHref><a className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Go to Admin Page</a></Link><br />
                 <button onClick={logout} className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Log out</button>
               </div>
-              : <form onSubmit={login} className='text-center'>
+            : <form onSubmit={login} className='text-center'>
                 <div className="flex" >
                   <div className="min-w-max pr-4 text-3xl text-left">
                     <label htmlFor="email">Email :</label><br />
