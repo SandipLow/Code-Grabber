@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { store } from '../state/store';
 
 function Navbar() {
-    const [authState, setAuthState] = useState(null) 
+    const [authState, setAuthState] = useState(null)
 
     useEffect(()=>{
         // let authtoken = localStorage.getItem("auth-token")
@@ -12,9 +12,13 @@ function Navbar() {
         //     setAuthState(authtoken);
         // }
 
+        if (typeof window !== undefined) {
+            setAuthState(store.getState().auth)
+        }
+
         const unsub = store.subscribe(()=> {
             let data = store.getState().auth
-            // console.log(data)
+            console.log(data)
 
             setAuthState(data);
         })

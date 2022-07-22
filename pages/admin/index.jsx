@@ -3,11 +3,24 @@ import Head from 'next/head'
 import Link from 'next/link';
 import CheckAuth from './check_auth';
 import { store } from '../../state/store';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../state';
+import { useDispatch } from 'react-redux';
 
 export default function Admin() {
 
+    const [userName, setUserName] = useState(null)
+
+    useEffect(()=>{
+        setUserName(store.getState().auth && store.getState().auth.name);
+    }, [])
+
+
+    const dispatch = useDispatch()
+
     const logout = ()=> {
-        localStorage.removeItem("auth-token");
+        const {logOut} = bindActionCreators(actionCreators, dispatch);
+        logOut();
         window.location.replace('/login')
     }
 
@@ -19,7 +32,7 @@ export default function Admin() {
         </Head>
 
         <div className='flex'>
-            <h1 className='text-2xl my-5 mx-2 font-bold'>Welcome <span className=' mx-3 text-green-300' >{store.getState().auth && store.getState().auth.name}</span></h1>
+            <h1 className='text-2xl my-5 mx-2 font-bold'>Welcome <span className=' mx-3 text-green-300' >{ userName }</span></h1>
             <button onClick={logout} className="bg-purple-800 text-yellow-100 p-2 my-4 mx-12 rounded transition hover:bg-purple-900">Log out</button>
         </div><hr />
 

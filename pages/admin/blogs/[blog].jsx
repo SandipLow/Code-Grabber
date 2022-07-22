@@ -45,7 +45,7 @@ const Blog = (props) => {
 
         let headersList = {
             "Accept": "*/*",
-            "auth-token": localStorage.getItem("auth-token"),
+            "auth-token": JSON.parse(localStorage.getItem("user")).authtoken,
             "Content-Type": "application/json"
         }
         

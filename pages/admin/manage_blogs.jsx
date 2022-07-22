@@ -11,7 +11,7 @@ const ManageBlogs = () => {
 
         let headersList = {
             "Accept": "*/*",
-            "auth-token": localStorage.getItem("auth-token")
+            "auth-token": JSON.parse(localStorage.getItem("user")).authtoken
         }
 
         fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/deleteblog/${id}`, {
@@ -42,7 +42,7 @@ const ManageBlogs = () => {
 
         let headersList = {
             "Accept": "*/*",
-            "auth-token": localStorage.getItem("auth-token")
+            "auth-token": JSON.parse(localStorage.getItem("user")).authtoken
         }
            
         fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/getallblogs`, {

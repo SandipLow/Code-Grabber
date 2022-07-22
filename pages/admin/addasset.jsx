@@ -41,7 +41,7 @@ const AddAssetSection = () => {
 
         let headersList = {
             "Accept": "*/*",
-            "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNjU0OTE5MzgxfQ.o3taNcm6SCJtPC3Bn1E2-8yCMJjDRHbnTBrW_za_qgg"
+            "auth-token": JSON.parse(localStorage.getItem("user")).authtoken
         }
 
         let formdata = new FormData();
@@ -95,7 +95,7 @@ const DeleteAssetSection = () => {
 
         let headersList = {
             "Accept": "*/*",
-            "auth-token": localStorage.getItem("auth-token")
+            "auth-token": JSON.parse(localStorage.getItem("user")).authtoken
         }
 
         fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/assets/deleteasset/${document.getElementById("image_url_to_be_deleted").value}`, {

@@ -14,10 +14,10 @@ export default function Login(props) {
   const { logIn, logOut } = bindActionCreators(actionCreators, dispatch);
 
   useEffect(() => {
-    let authtoken = localStorage.getItem("auth-token")
+    let user = localStorage.getItem("user")
 
-    if (authtoken != undefined) {
-      setAuthState(authtoken);
+    if (user != undefined) {
+      setAuthState(user);
     }
 
   }, [])
@@ -48,12 +48,11 @@ export default function Login(props) {
       let tokenstring = await res.text()
       let token = JSON.parse(tokenstring).authtoken;
 
-      localStorage.setItem("auth-token", token)
-      localStorage.setItem("user", JSON.stringify({
-        name : form.email
-      }))
-
-      logIn(localStorage.getItem("user"));
+      logIn( JSON.stringify({
+        name : form.email, 
+        authtoken : token
+      }) );
+      
       setAuthState(token);
 
 
@@ -69,8 +68,6 @@ export default function Login(props) {
   }
 
   const logout = () => {
-    localStorage.removeItem("auth-token");
-    localStorage.removeItem("user");
 
     logOut();
     setAuthState(null);
@@ -94,7 +91,7 @@ export default function Login(props) {
           <div className="flex justify-center p-4 ">
             {authState ?
               <div className='text-center w-64'>
-                <p>Logged In as {store.getState().auth.name}</p><br />
+                <p>Logged In as { store.getState().auth && store.getState().auth.name}</p><br />
                 <Link href="/admin" passHref><a className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Go to Admin Page</a></Link><br />
                 <button onClick={logout} className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Log out</button>
               </div>
