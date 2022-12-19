@@ -2,6 +2,9 @@ require('dotenv').config('./.env');
 
 const connectToMongo = require('./db')
 const express = require('express')
+const cookieSession = require('cookie-session')
+const passport = require('passport')
+require('./passport.setup.js')
 
 // Connecting to the db
 connectToMongo()
@@ -24,6 +27,14 @@ app.use((req, res, next)=>{
 })
 
 app.use(express.json())
+
+app.use(cookieSession({
+    maxAge : 24 * 60 * 60 * 1000,
+    keys : ['sandip@low']
+  }))
+  
+  app.use(passport.initialize())
+  app.use(passport.session())
 
 // // Routes for the app
 app.get('/', (req, res)=>{

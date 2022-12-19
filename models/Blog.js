@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const BlogSchema = new Schema({
+    user : {
+        type: String,
+        default: "*",
+    },
     title : {
         type: String,
         required: true
