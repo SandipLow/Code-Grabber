@@ -1,6 +1,5 @@
 // react and components :
 import Head from 'next/head'
-import { useEffect, useRef, useState } from 'react';
 
 // prismjs :
 import Prism from 'prismjs'
@@ -11,33 +10,28 @@ import 'prismjs/components/prism-java.min';
 import 'prismjs/components/prism-markup-templating'
 import 'prismjs/components/prism-php';
 
-const Blog = (props) => {
-    let main = useRef()
-    const [data, setData] = useState(props.data)
-
-    useEffect(()=>{
-        if (data) {
-            main.current.innerHTML = data.content;
-            Prism.highlightAll();
-        }
-        else {main.current.innerHTML = `<h1>No such blog found....😐</h1>`;}
-    },[data])
+const Blog = ({ data }) => {
+    if (typeof window !== "undefined") {
+        Prism.highlightAll()
+    }
 
     return (
         <>
-            <Head>
-                <title>{data && data.title} | Code Grabber</title>
-                <meta name="description" content={data && data.metadesc} />
-                <link rel="stylesheet" href="/styles/blog.module.css" />
-                <link rel="manifest" href="/manifest.webmanifest" />
-            </Head>
-
-            {/* <Navbar /> */}
-
-            {/* body */}
-            <div ref={main} className="bg-gray-700 text-gray-100">
-                {/* content */}
+        <Head>
+            <title>{data ? data.title : "Not Found"} | Code Grabber</title>
+            <meta name="description" content={data && data.metadesc} />
+            <link rel="stylesheet" href="/styles/blog.module.css" />
+            <link rel="manifest" href="/manifest.webmanifest" />
+        </Head>
+        
+        {data ? <section dangerouslySetInnerHTML={{__html: data.content}} />
+         : <div className="text-center my-10">
+            <h1 className='text-3xl'>Sorry, No Such Blog Found...!</h1>
+            <div className='w-full flex justify-center mt-10'>
+                <img src="/Assets/Not Found.svg" className='h-96' />
             </div>
+        </div>}
+        
         </>
     )
 }

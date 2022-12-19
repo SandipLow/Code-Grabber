@@ -4,10 +4,7 @@ code snippets for the coders from a coder...😀
 
 Get code snippets for many popular languages and frameworks :
 
-<img src="public/Assets/programming/react.png" height="30px" class="icon" alt="react">
-<img src="public/Assets/programming/unity.png" height="30px" class="icon" alt="unity">
-<img src="public/Assets/programming/flutter.png" height="30px" class="icon" alt="flutter">
-<img src="public/Assets/programming/firebase.png" height="30px" class="icon" alt="firebase">
+MERN full stack blogging site
 <br><br>
 
 # Techs used :

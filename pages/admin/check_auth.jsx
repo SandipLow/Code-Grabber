@@ -1,12 +1,19 @@
-import React, {useEffect} from 'react'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const CheckAuth = () => {
+
+    const router = useRouter()
+
     useEffect(() => {
+
         const user = localStorage.getItem("user")
+
         if (user == undefined) {
             alert("Have to Log in first...")
-            location.replace("/login");
+            router.push("/auth");
         }
+
     }, [])
 
     return

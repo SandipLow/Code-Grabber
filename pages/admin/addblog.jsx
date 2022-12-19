@@ -11,7 +11,7 @@ import 'prismjs/components/prism-java.min';
 import 'prismjs/components/prism-markup-templating'
 import 'prismjs/components/prism-php';
 
-const Add_Blog = () => {
+const Add_Blog = ({ auth }) => {
     const [formData, setFormData] = useState({
         title : "",
         content : "",
@@ -56,7 +56,7 @@ const Add_Blog = () => {
 
         let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/addblog`, { 
             method: "POST",
-            body: JSON.stringify(formData),
+            body: JSON.stringify({...formData, user: auth.user.name}),
             headers: headersList
         })
 

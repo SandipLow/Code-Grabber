@@ -1,27 +1,18 @@
-import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import Link from 'next/link';
 import CheckAuth from './check_auth';
-import { store } from '../../state/store';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../state';
-import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useUser } from '../../hooks/auth';
 
-export default function Admin() {
+export default function Admin({ auth }) {
 
-    const [userName, setUserName] = useState(null)
-
-    useEffect(()=>{
-        setUserName(store.getState().auth && store.getState().auth.name);
-    }, [])
-
-
-    const dispatch = useDispatch()
+    const { logOut } = auth
+    const user = useUser()
+    const router = useRouter()
 
     const logout = ()=> {
-        const {logOut} = bindActionCreators(actionCreators, dispatch);
         logOut();
-        window.location.replace('/login')
+        router.push("/auth")
     }
 
     return (
@@ -32,7 +23,8 @@ export default function Admin() {
         </Head>
 
         <div className='flex'>
-            <h1 className='text-2xl my-5 mx-2 font-bold'>Welcome <span className=' mx-3 text-green-300' >{ userName }</span></h1>
+            <h1 className='text-2xl my-5 mx-2 font-bold'>Welcome <span className=' mx-3 text-green-300' >{ user && user.displayName }</span></h1>
+            <img src={user && user.profilePic} alt="profile picture" className='h-14 w-14 bg-cover my-2 rounded-full' />
             <button onClick={logout} className="bg-purple-800 text-yellow-100 p-2 my-4 mx-12 rounded transition hover:bg-purple-900">Log out</button>
         </div><hr />
 
@@ -58,5 +50,3 @@ const Card = (props) => {
         </Link>
     )
 }
-
-
