@@ -1,7 +1,7 @@
 const GoogleSignIn = ({ className }) => {
 
     const googleSignIn = async ()=> {
-        window.open(process.env.NEXT_PUBLIC_BACKEND_HOST+"/api/auth/google", "_self")
+        window.open("https://code-grabber.onrender.com/api/auth/google")
     }
 
   return (

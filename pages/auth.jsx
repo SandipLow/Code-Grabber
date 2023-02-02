@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import Head from 'next/head'
 import Link from 'next/link';
-import GoogleSignIn from '../components/GoogleSignIn';
+import GoogleSignIn from '../client/components/GoogleSignIn';
 
 export default function Auth({ auth }) {
 

@@ -5,7 +5,7 @@ function Navbar({ auth }) {
 
     return (
         <>
-        <div className="bg-purple-800 py-2 flex justify-between text-yellow-100">
+        <div className=" bg-purple-900 py-2 flex justify-between text-yellow-100">
             <span className="font-bold px-2">Code Grabber</span>
             <nav>
                 <ul className="flex mx-4">

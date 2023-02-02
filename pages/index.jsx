@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Head from 'next/head'
-import PostCard from '../components/PostCard';
+import PostCard from '../client/components/PostCard';
 
 export default function Home({ recentPosts, popularPosts }) {
 

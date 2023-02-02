@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
-import PostCard from '../../components/PostCard'
+import PostCard from '../../client/components/PostCard'
+import Spinner from 'react-spinner-material'
 
 const ManageBlogs = ({ auth }) => {
 
-    const [blogs, setBlogs] = useState([])
+    const [blogs, setBlogs] = useState(null)
 
     const delete_blog = (id) => {
 
@@ -51,7 +52,8 @@ const ManageBlogs = ({ auth }) => {
         </Head>
         <center>
             {
-                blogs.map((blog, ind)=>(
+                !blogs ? <Spinner className='my-2 mx-2' radius={40} color={"#5b21b6"} stroke={5} visible />
+                : blogs.map((blog, ind)=>(
                         <div className='flex items-center flex-wrap justify-center' style={{'width': 'fit-content'}} key={ind} >
                             <PostCard img={blog.img} slug={blog.slug?blog.slug:undefined} title={blog.title} dark={false} shortDesc={blog.description}/>
                             <div style={{'width': 'fit-content'}} >

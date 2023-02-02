@@ -6,7 +6,7 @@ export function useUser() {
 
     useEffect(()=>{
 
-        fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/auth/getuser`, {
+        fetch(`/api/auth/getuser`, {
             method: "POST",
             headers : {
                 "Accept": "*/*",
