@@ -1,7 +1,7 @@
 const GoogleSignIn = ({ className }) => {
 
     const googleSignIn = async ()=> {
-        window.open("https://code-grabber.onrender.com/api/auth/google")
+      window.open("/api/auth/google")
     }
 
   return (
