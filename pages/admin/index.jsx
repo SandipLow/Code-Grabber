@@ -23,7 +23,7 @@ export default function Admin({ auth }) {
             <title>Admin Page | Code Grabber</title>
         </Head>
 
-        <div className='flex'>
+        <div className='flex flex-wrap'>
             {
                 user ? <>
                     <h1 className='text-2xl my-5 mx-2 font-bold'>
@@ -33,7 +33,7 @@ export default function Admin({ auth }) {
                 </>
                 : <Spinner className='mt-2 mx-2' radius={40} color={"#5b21b6"} stroke={5} visible />
             }
-            <button onClick={logout} className="bg-purple-800 text-yellow-100 p-2 my-4 mx-12 rounded transition hover:bg-purple-900">Log out</button>
+            <button onClick={logout} className="bg-purple-800 text-yellow-100 p-2 my-4 mx-2 rounded transition hover:bg-purple-900">Log out</button>
         </div><hr />
 
         <center className="flex flex-wrap justify-evenly p-10">
