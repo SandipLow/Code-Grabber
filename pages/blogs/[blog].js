@@ -1,5 +1,6 @@
 // react and components :
 import Head from 'next/head'
+import { useEffect } from 'react'
 
 // prismjs :
 import Prism from 'prismjs'
@@ -11,9 +12,12 @@ import 'prismjs/components/prism-markup-templating'
 import 'prismjs/components/prism-php';
 
 const Blog = ({ data }) => {
-    if (typeof window !== "undefined") {
-        Prism.highlightAll()
-    }
+    useEffect(()=> {
+        if (typeof window !== "undefined") {
+            Prism.highlightAll()
+        }
+
+    }, [])
 
     return (
         <>

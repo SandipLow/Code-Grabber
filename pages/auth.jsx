@@ -114,8 +114,9 @@ const LogInForm = ({ logIn, tooglePane }) => {
         </div>
       </div>
       <button type="submit" className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Submit</button>
-      <GoogleSignIn className="h-12 my-2" />
-      <span className='block my-4'>Don&apost Have a account ? <button type='none' className='font-bold text-purple-800' onClick={tooglePane}>Sign Up</button></span>
+      <span className='block m-2 p-2'>Or...</span>
+      <GoogleSignIn />
+      <span className='block my-4'>Don't Have a account ? <button type='none' className='font-bold text-purple-800' onClick={tooglePane}>Sign Up</button></span>
     </form>
   )
 }
@@ -208,7 +209,8 @@ const SignupForm = ({ logIn, tooglePane }) => {
         </div>
       </div>
       <button type="submit" className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded" onClick={handleSubmit}>Submit</button>
-      <GoogleSignIn className="h-12 my-2" />
+      <span className='block m-2 p-2'>Or...</span>
+      <GoogleSignIn />
       <span className='block my-4'>Already have a account ? <button type='none' className='font-bold text-purple-800' onClick={tooglePane}>Log In</button></span>
     </div>
   )
