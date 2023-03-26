@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 import CheckAuth from './check_auth'
+import mdStyle from "../../styles/mdstyles.module.css"
 
 // prismjs :
 import Prism from 'prismjs'
@@ -10,6 +11,8 @@ import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min'
 import 'prismjs/components/prism-java.min';
 import 'prismjs/components/prism-markup-templating'
 import 'prismjs/components/prism-php';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 const Add_Blog = ({ auth }) => {
     const [formData, setFormData] = useState({
@@ -109,9 +112,7 @@ const Add_Blog = ({ auth }) => {
                         ...formData,
                         content : e.target.value
                     })
-
-                    document.getElementById("view_blog").innerHTML = e.target.value;
-                    Prism.highlightAllUnder(document.getElementById("view_blog"))
+                    Prism.highlightAll()
                 }} />
             </div>
 
@@ -177,7 +178,21 @@ const Add_Blog = ({ auth }) => {
             <button className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded" type="submit">Submit</button>
         </form>
         <hr />
-        <div className='mt-12' id='view_blog'></div>
+        <div className={mdStyle.md}>
+            <section>
+                <h1>{formData.title}</h1>
+                <img className='w-full p-4' src={formData.img}
+                    alt="cover"/>
+                <h2>About the blog</h2>
+                <p>{formData.description}</p>
+                <div className='mt-4'>
+                    {
+                        formData.tags.map((tag, ind)=><span key={ind} className='inline-block bg-blue-800 bg-opacity-40 text-blue-400 px-2 rounded-xl mx-2'>#{tag}</span>)
+                    }
+                </div>
+            </section>
+            <ReactMarkdown rehypePlugins={[rehypeRaw]} >{formData.content}</ReactMarkdown>
+        </div>
         </>
     )
 }
