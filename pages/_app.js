@@ -1,5 +1,4 @@
 import '../styles/globals.css'
-import "prismjs/themes/prism-okaidia.min.css";
 import Navbar from '../client/components/Navbar';
 import Head from 'next/head';
 import { useState, useEffect } from 'react'

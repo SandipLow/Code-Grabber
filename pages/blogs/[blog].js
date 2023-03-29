@@ -1,51 +1,34 @@
 // react and components :
 import Head from 'next/head'
-import { useEffect } from 'react'
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import rehypeRaw from 'rehype-raw'
-import mdStyle from "../../styles/mdstyles.module.css"
-
-// prismjs :
-import Prism from 'prismjs'
-import 'prismjs/plugins/toolbar/prism-toolbar.min.css'
-import 'prismjs/plugins/toolbar/prism-toolbar.min.js'
-import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min'
-import 'prismjs/components/prism-java.min';
-import 'prismjs/components/prism-markup-templating'
-import 'prismjs/components/prism-php';
+import BlogRender from '../../client/components/BlogRender'
 
 const Blog = ({ data }) => {
-    useEffect(()=> {
-        if (typeof window !== "undefined") {
-            Prism.highlightAll()
-        }
-
-    }, [])
 
     return (
         <>
         <Head>
             <title>{data ? data.title : "Not Found"} | Code Grabber</title>
-            <meta name="description" content={data && data.metadesc} />
+            <meta name="description" content={data && data.description} />
+            <link rel="canonical" href={`https://codegrabber.vercel.app/blogs/${data && data.slug}`} />
+            <meta property="og:locale" content="en_US" />
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content={data && data.title} />
+            <meta property="og:description" content={data && data.description} />
+            <meta property="og:url" content={`https://codegrabber.vercel.app/blogs/${data && data.slug}`} />
+            <meta property="og:site_name" content="Code Grabber" />
+            <meta property="og:image" content={data && data.img} />
+            <meta property="og:image:width" content="720" />
+            <meta property="og:image:height" content="640" />
+            <meta property="og:image:type" content="image/png" />
+            <meta name="author" content="Sandip Low" />
+            <meta property="ya:ovs:adult" content="false" />
+            <meta property="ya:ovs:upload_date" content="2018-05-14T08:52:29+00:00" />
+            <meta property="ya:ovs:allow_embed" content="true" />
             <link rel="manifest" href="/manifest.webmanifest" />
         </Head>
         
-        {data ? <div className={mdStyle.md}>
-            <section>
-                <h1>{data.title}</h1>
-                <img className='w-full p-4' src={data.img}
-                    alt="cover"/>
-                <h2>About the blog</h2>
-                <p>{data.description}</p>
-                <div className='mt-4'>
-                    {
-                        data.tags.map((tag, ind)=><span key={ind} className='inline-block bg-blue-800 bg-opacity-40 text-blue-400 px-2 rounded-xl mx-2'>#{tag}</span>)
-                    }
-                </div>
-            </section>
-            <ReactMarkdown rehypePlugins={[rehypeRaw]} >{data.content}</ReactMarkdown>
-        </div>
-         : <div className="text-center my-10">
+        {data ? <BlogRender data={data} />
+        :   <div className="text-center my-10">
             <h1 className='text-3xl'>Sorry, No Such Blog Found...!</h1>
             <div className='w-full flex justify-center mt-10'>
                 <img src="/Assets/Not Found.svg" className='h-96' />

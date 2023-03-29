@@ -1,19 +1,8 @@
 // react and components :
 import Head from 'next/head'
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CheckAuth from '../check_auth';
-import mdStyle from "../../../styles/mdstyles.module.css"
-
-// prismjs :
-import Prism from 'prismjs'
-import 'prismjs/plugins/toolbar/prism-toolbar.min.css'
-import 'prismjs/plugins/toolbar/prism-toolbar.min.js'
-import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min'
-import 'prismjs/components/prism-java.min';
-import 'prismjs/components/prism-markup-templating'
-import 'prismjs/components/prism-php';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import rehypeRaw from 'rehype-raw';
+import BlogRender, { MarkDownContent } from '../../../client/components/BlogRender';
 
 const Blog = (props) => {
 
@@ -22,10 +11,6 @@ const Blog = (props) => {
     const [tags, setTags] = useState([]);
     
     useEffect(() => {
-        // console.log("Component rebuild !")
-        if (typeof window !== "undefined") {
-            Prism.highlightAll()
-        }
 
         if (typeof(formData.tags)=='object') {
 
@@ -86,18 +71,6 @@ const Blog = (props) => {
                         ...formData,
                         title : e.target.value
                     })
-                }} />
-            </div>
-            
-            <div className="my-4">
-                <label className=' font-semibold text-lg' htmlFor="content">Content : </label><br />
-                <textarea className='bg-gray-800 h-96 w-full p-4 mt-4 rounded' id='content' value={formData.content} onChange={(e)=>{
-                    setFormData({
-                        ...formData,
-                        content : e.target.value
-                    })
-
-                    Prism.highlightAll()
                 }} />
             </div>
 
@@ -165,20 +138,19 @@ const Blog = (props) => {
 
         <span className='font-sm text-green-500 m-6' id='result'></span>
         <hr className='my-6' />
-        <div className={mdStyle.md}>
-            <section>
-                <h1>{formData.title}</h1>
-                <img className='w-full p-4' src={formData.img}
-                    alt="cover"/>
-                <h2>About the blog</h2>
-                <p>{formData.description}</p>
-                <div className='mt-4'>
-                    {
-                        formData.tags.map((tag, ind)=><span key={ind} className='inline-block bg-blue-800 bg-opacity-40 text-blue-400 px-2 rounded-xl mx-2'>#{tag}</span>)
-                    }
-                </div>
-            </section>
-            <ReactMarkdown rehypePlugins={[rehypeRaw]} >{formData.content}</ReactMarkdown>
+        <label className=' font-semibold text-lg' htmlFor="content">Content : </label><br />
+        <div className='w-full flex flex-wrap'>
+            <div className="w-1/2">
+                <textarea className='bg-gray-800 h-full w-full p-4 mt-4 rounded' id='content' value={formData.content} onChange={(e)=>{
+                    setFormData({
+                        ...formData,
+                        content : e.target.value
+                    })
+                }} />
+            </div>
+            <div className='w-1/2'>
+                <MarkDownContent content={formData.content} />
+            </div>
         </div>
         </>
     )

@@ -19,13 +19,10 @@ export default function Auth({ auth }) {
         <title>Admin Log in | Code Grabber</title>
       </Head>
       <div className="flex justify-center">
-        <div className="m-48 bg-purple-200 text-gray-600 rounded-2xl" style={{
+        <div className="m-48 bg-purple-200 text-gray-600" style={{
           width: "fit-content"
         }}>
-          <h1 className="bg-purple-800 text-yellow-100 text-3xl p-2 text-center" style={{
-            borderTopRightRadius: "inherit",
-            borderTopLeftRadius: "inherit"
-          }} >
+          <h1 className="bg-purple-800 text-yellow-100 text-3xl p-2 text-center" >
             {user ? "Welcome" : currentPane}
           </h1>
           <div className="flex justify-center p-4 ">
@@ -103,14 +100,14 @@ const LogInForm = ({ logIn, tooglePane }) => {
 
   return (
     <form onSubmit={login} className='text-center'>
-      <div className="flex" >
-        <div className="min-w-max pr-4 text-3xl text-left">
-          <label htmlFor="email">Email :</label><br />
-          <label htmlFor="password">Password :</label>
+      <div >
+        <div>
+          <label className='inline-block w-full text-left mx-2 p-2 font-bold' htmlFor="email">Email :</label><br />
+          <input type="email" placeholder='Enter Your Email' name="email" value={form.email} onChange={(e) => setForm({ email: e.target.value, password: form.password })} id="email" className="mx-2 p-2 w-80" required />
         </div>
         <div>
-          <input type="email" name="email" value={form.email} onChange={(e) => setForm({ email: e.target.value, password: form.password })} id="email" className="m-2" required /><br />
-          <input type="password" name="password" value={form.password} onChange={(e) => setForm({ email: form.email, password: e.target.value })} id="password" className="m-2" required />
+          <label className='inline-block w-full text-left mx-2 p-2 font-bold' htmlFor="password">Password :</label><br />
+          <input type="password" placeholder='Enter Password' name="password" value={form.password} onChange={(e) => setForm({ email: form.email, password: e.target.value })} id="password" className="mx-2 p-2 w-80" required />
         </div>
       </div>
       <button type="submit" className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Submit</button>
@@ -195,7 +192,7 @@ const SignupForm = ({ logIn, tooglePane }) => {
         <div className='px-2 my-2 text-right'>
           <label htmlFor="profilePic" className='inline-block px-2 w-48 text-2xl text-left' >Profile Picture :</label>
           <input type="file" name='profilePic' id='profilePic' ref={imgInpRef} onChange={handleChangePic} className='px-3 w-72' placeholder='add a cool photo for your profile(optional)...' />
-          <div className='flex flex-row-reverse pr-4 my-2'>
+          <div className='w-full text-left pr-4 my-2'>
             <img src="/Assets/upload.webp" alt="upload" ref={imgRef} className='block h-32' />
           </div>
         </div>
