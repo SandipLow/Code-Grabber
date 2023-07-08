@@ -1,9 +1,10 @@
 import nextConnect from "next-connect";
-import connectToMongo from "../../../server/db"
-import Blog from "../../../server/models/Blog"
+import connectToMongo from "../../../server/db";
+import Blog from "../../../server/models/Blog";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
+        console.log(error);
         res.status(501).json({ error: `Sorry something Happened! ${error.message}` });
     },
     onNoMatch(req, res) {
@@ -11,11 +12,15 @@ const apiRoute = nextConnect({
     },
 });
 
-apiRoute.get( async (req, res)=> {
+apiRoute.post( async (req, res)=> {
     await connectToMongo()
+    // get the slug from req body
+    const { slug } = req.body
+    // Check if the slug is available or not
+    const check = await Blog.findOne({slug})
 
-    const blogs = await Blog.find({}).sort({date_modified : -1}).limit(6);
-    res.json(blogs);
+    if(check) res.send(false)
+    else res.send(true)
 })
 
 export default apiRoute;

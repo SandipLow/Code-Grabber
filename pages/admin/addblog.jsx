@@ -1,44 +1,34 @@
 import Head from 'next/head';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CheckAuth from './check_auth'
-import BlogRender from '../../client/components/BlogRender';
+import { MarkDownContent } from '../../client/components/BlogRender';
+import { ButtonCustom } from '../../client/components/Buttons';
+import FaLoading from '../../client/components/Loader';
+import { BannerPost } from '../../client/components/Banner';
+
+
 
 const Add_Blog = ({ auth }) => {
     const [formData, setFormData] = useState({
-        title : "",
-        content : "",
-        description : "",
-        tags : [],
-        slug : "",
-        img : "" 
+        title: "",
+        content: "",
+        description: "",
+        tags: [],
+        slug: "",
+        img: ""
     });
+    const [newTag, setNewTag] = useState("")
+    const [clicked, setClicked] = useState(false)
+    const [controller, setController] = useState(new AbortController())
 
-    const [tags, setTags] = useState([]);
-    
-    useEffect(() => {
-        // console.log("Component rebuild !")
+    const addBlog = async () => {
+        const form_vals = Object.values(formData)
 
-        if (typeof(formData.tags)=='object') {
-
-            let tags = formData.tags.map((tag, ind) => {
-                return <input className=' bg-gray-800 p-2 mx-2 rounded w-32' key={ind} value={tag} onChange={(e)=>{
-                    let temp = formData.tags;
-                    temp[ind] = e.target.value;
-                    setFormData({
-                        ...formData,
-                        tags : temp
-                    })
-                }} />
-            })
-
-            setTags(tags)
+        for (let i=0; i<form_vals.length; i++) {
+            if (form_vals[i].length === 0) return
         }
-
-
-    }, [formData]);
-
-    const addBlog = async (e)=> {
-        e.preventDefault();
+        
+        setClicked(true)
 
         let headersList = {
             "Accept": "*/*",
@@ -46,130 +36,188 @@ const Add_Blog = ({ auth }) => {
             "Content-Type": "application/json"
         }
 
-        let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/addblog`, { 
+        let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/addblog`, {
             method: "POST",
-            body: JSON.stringify({...formData, user: auth.user.name}),
+            body: JSON.stringify({ ...formData, user: auth.user.name }),
             headers: headersList
         })
 
         let data = await res.json();
 
-        if(data.errors) {
-            data.errors.forEach(err=>{
+        if (data.errors) {
+            data.errors.forEach(err => {
                 alert(`${err.msg}..\nYou Entered ${err.value}`)
             })
         } else {
             alert("Submitted successfully")
 
             setFormData({
-                title : "",
-                content : "",
-                description : "",
-                tags : [],
-                slug : "",
-                img : "" 
+                title: "",
+                content: "",
+                description: "",
+                tags: [],
+                slug: "",
+                img: ""
             })
         }
-        
+
+        setClicked(false)
+
         // console.log(data);
     }
 
     return (
         <>
-        <Head>
-            <title>Add Blog | Code Grabber</title>
-            <link rel="stylesheet" href="/styles/blog.module.css" />
-        </Head>
+            <Head>
+                <title>Add Blog | Code Grabber</title>
+            </Head>
 
-        <CheckAuth/>
+            <CheckAuth />
 
-        <form className='p-4' onSubmit={addBlog} action="submit">
-            <div className=' my-4'>
-                <label className=' font-semibold text-lg' htmlFor="title" >Title : </label>
-                <input className=' bg-gray-800 h-8 p-2 mx-6 w-64 rounded' id='title' type="text" value={formData.title} onChange={(e)=>{
-                    setFormData({
-                        ...formData,
-                        title : e.target.value
-                    })
-                }} />
+            <BannerPost 
+                title="Add Blog"
+                img="/Assets/add_blog.jpg"
+            />
+
+            <div className='text-center w-full'>
+                <div className='inline-block m-2 p-2 border rounded-lg'>
+                    <span className='font-bebas-neue text-3xl'>Add Blog Details</span>
+                    <input
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        type="text"
+                        placeholder='Enter title of Blog'
+                        value={formData.title}
+                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    />
+                    <input
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        type="text"
+                        placeholder='Enter Description of Blog'
+                        value={formData.description}
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    />
+                    <input
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 border'
+                        type="text"
+                        placeholder='Enter a unique slug for the Blog'
+                        value={formData.slug}
+                        onChange={ async (e) => {
+                            setFormData({ ...formData, slug: e.target.value })
+
+                            if (e.target.value === "") {
+                                e.target.style.borderColor = 'red'
+                                return
+                            }
+
+                            e.target.style.borderColor = 'yellow'
+
+                            controller.abort()
+
+                            const newController = new AbortController()
+                            setController(newController)
+
+                            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/getslugstatus`, {
+                                method: "POST",
+                                headers: {
+                                    "Accept": "*/*",
+                                    "Content-Type": "application/json"
+                                },
+                                signal: newController.signal,
+                                body: JSON.stringify({slug: e.target.value})
+                            })
+
+                            
+                            if (res.status === 200) {
+                                const available = await res.text()
+
+                                if (available === "true") {
+                                    e.target.style.borderColor = 'green'
+                                    return
+                                }
+                            }
+                            
+                            e.target.style.borderColor = 'red'
+
+                        }}
+                    />
+                    <input
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        type="text"
+                        placeholder='Enter the Image url for the blog'
+                        value={formData.img}
+                        onChange={(e) => setFormData({ ...formData, img: e.target.value })}
+                    />
+                    <div className='m-1 p-1 border text-left'>
+                        {
+                            formData.tags.length === 0 ? 
+                                <p className='text-cdek-gray'>Enter a new Tag</p>
+                            : formData.tags.map((tag, index)=> 
+                                <span 
+                                    key={index} 
+                                    onClick={e=> {
+                                        // delete tag
+                                        let newTags = formData.tags.filter(t=> t !== tag)
+                                        setFormData({...formData, tags: newTags})
+                                    }}
+                                    className='p-1 mx-2 rounded-xl cursor-pointer bg-slate-300 text-cdek-gray'
+                                >
+                                    #{tag}
+                                </span>)
+                        }
+                    </div>
+                    <input 
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        type="text"
+                        placeholder='Add a new tag'
+                        value={newTag}
+                        onChange={e=>setNewTag(e.target.value)}
+                    />
+                    <ButtonCustom
+                        color="cdek-blue"
+                        onClick={()=> {
+                            setFormData({...formData, tags: [...formData.tags, newTag]})
+                            setNewTag("")
+                        }}
+                    >
+                        Add
+                    </ButtonCustom>
+                    <img
+                        height={100} 
+                        width={100} 
+                        src={formData.img} 
+                        alt="Image Url" 
+                    />
+                    <div className='my-4'>
+                        <ButtonCustom
+                            color="cdek-blue"
+                            disabled={clicked}
+                            onClick={addBlog}
+                        >
+                            {clicked ? <FaLoading /> : "Create Blog"}
+                        </ButtonCustom>
+                    </div>
+                </div>
             </div>
 
-            <div className="my-4">
-                <label className=' font-semibold text-lg' htmlFor="description">Description : </label><br />
-                <textarea className=' bg-gray-800 w-full p-4 mt-4 rounded' id='description' value={formData.description} onChange={(e)=>{
-                    setFormData({
-                        ...formData,
-                        description : e.target.value
-                    })
-                }} />
+            <div className='w-full h-screen pt-12 flex flex-wrap items-start'>
+                <div className='w-1/2 inline-block h-full'>
+                    <textarea
+                        className='px-4 py-3 border block my-2 w-full h-full outline-none resize-none bg-cdek-black text-cdek-aqua'
+                        type="text"
+                        placeholder='Enter the content of the blog in Markup Language'
+                        value={formData.content}
+                        onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                    />
+                </div>
+                <div className='w-1/2 inline-block'>
+                    {
+                        formData.content === "" ? <p className='m-3 p-3 w-full text-left text-cdek-gray'>Preview of the witten blog</p>
+                        : <MarkDownContent content={formData.content} />
+                    }
+                </div>
             </div>
 
-            <div className="my-4">
-                <label className=' font-semibold text-lg' htmlFor="tags">Tags : </label>
-                { tags }
-                <button onClick={(e)=>{
-                    e.preventDefault()
-                    let temp = [...formData.tags];
-                    temp = [...temp, "Add Tag"]
 
-                    setFormData({
-                        ...formData,
-                        tags : temp
-                    })
-                    
-                }}>+</button>
-                <button onClick={(e)=>{
-                    e.preventDefault()
-                    let temp = [...formData.tags];
-                    temp.pop()
-
-                    setFormData({
-                        ...formData,
-                        tags : temp
-                    })
-                    
-                }}>-</button>
-            </div>
-
-            <div className="my-4">
-                <label className=' font-semibold text-lg' htmlFor='slug' >Slug : </label>
-                <input className=' bg-gray-800 p-2 rounded' id='slug' type="text" value={formData.slug} onChange={(e)=>{
-                    setFormData({
-                        ...formData,
-                        slug : e.target.value
-                    })
-                }} />
-            </div>
-
-            <div className="my-4">
-                <label className=' font-semibold text-lg' htmlFor='img' >Image icon : </label><br />
-                <input className=' bg-gray-800 my-4 h-10 rounded w-full max-w-xl' id='img' type="text" value={formData.img} onChange={(e)=>{
-                    setFormData({
-                        ...formData,
-                        img : e.target.value
-                    })
-                }} />
-
-                <img src={formData.img} className="h-32" alt="preview-image" />
-            </div>
-
-            <button className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded" type="submit">Submit</button>
-        </form>
-        <hr />
-        <label className=' font-semibold text-lg' htmlFor="content">Content : </label><br />
-        <div className='w-full flex flex-wrap'>
-            <div className="w-1/2">
-                <textarea className='bg-gray-800 h-full w-full p-4 mt-4 rounded' id='content' value={formData.content} onChange={(e)=>{
-                    setFormData({
-                        ...formData,
-                        content : e.target.value
-                    })
-                }} />
-            </div>
-            <div className='w-1/2'>
-                <BlogRender data={formData} />
-            </div>
-        </div>
         </>
     )
 }

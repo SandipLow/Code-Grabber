@@ -3,6 +3,7 @@ import { uploadProfilePictures } from "../../../server/middleware/upload";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
+        console.log(error);
         res.status(501).json({ error: `Sorry something Happened! ${error.message}` });
     },
     onNoMatch(req, res) {
@@ -12,10 +13,16 @@ const apiRoute = nextConnect({
 
 apiRoute.use(uploadProfilePictures.single('file'))
 
-apiRoute.post( async (req, res)=> {
+apiRoute.post(async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `https://codegrabber.vercel.app/api/assets/getprofilepic/${req.file.filename}`;
+    const imgUrl = `/api/assets/getprofilepic/${req.file.filename}`;
     res.send(imgUrl);
 })
 
 export default apiRoute;
+
+export const config = {
+    api: {
+        bodyParser: false
+    }
+}

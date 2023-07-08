@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import CheckAuth from './check_auth'
 
-const addasset = () => {
+const manage_assets = () => {
 
     return (
         <>
@@ -19,7 +19,7 @@ const addasset = () => {
     )
 }
 
-export default addasset
+export default manage_assets
 
 
 const AddAssetSection = () => {

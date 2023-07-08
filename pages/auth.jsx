@@ -2,6 +2,10 @@ import { useState, useRef } from 'react';
 import Head from 'next/head'
 import Link from 'next/link';
 import GoogleSignIn from '../client/components/GoogleSignIn';
+import { BannerPost } from '../client/components/Banner'
+import FaLoading from '../client/components/Loader';
+import { ButtonCustom } from '../client/components/Buttons';
+import { useRouter } from 'next/router';
 
 export default function Auth({ auth }) {
 
@@ -18,53 +22,70 @@ export default function Auth({ auth }) {
       <Head>
         <title>Admin Log in | Code Grabber</title>
       </Head>
-      <div className="flex justify-center">
-        <div className="m-48 bg-purple-200 text-gray-600" style={{
-          width: "fit-content"
-        }}>
-          <h1 className="bg-purple-800 text-yellow-100 text-3xl p-2 text-center" >
-            {user ? "Welcome" : currentPane}
-          </h1>
-          <div className="flex justify-center p-4 ">
-            {
-              user ?  <LoggedIn 
-                        user={user} 
-                        logOut={logOut}
-                      />
-              : currentPane == "Login" ?  <LogInForm 
-                                            logIn={logIn} 
-                                            tooglePane={tooglePane}
-                                          />
-              : <SignupForm 
-                  logIn={logIn} 
-                  tooglePane={tooglePane}
-                />
-            }
-          </div>
-        </div>
+      <BannerPost title={"Here is the Start of Journey"} />
+      <div className="p-4 ">
+        {
+          user ?  <LoggedIn 
+                    user={user} 
+                    logOut={logOut}
+                  />
+          : currentPane == "Login" ?  <LogInForm 
+                                        logIn={logIn} 
+                                        tooglePane={tooglePane}
+                                      />
+          : <SignupForm 
+              logIn={logIn} 
+              tooglePane={tooglePane}
+            />
+        }
       </div>
     </>
   )
 }
 
 const LoggedIn = ({ user, logOut }) => {
+  const router = useRouter();
   
   return (
-    <div className='text-center w-64'>
-      <p>Logged In as {user.name}</p><br />
-      <Link href="/admin" className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Go to Admin Page</Link><br />
-      <button onClick={logOut} className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Log out</button>
+    <div className='text-center'>
+      <div className='inline-block m-2 p-2 border rounded-lg'>
+        <span className='font-bebas-neue text-3xl'>Logged In</span>
+        <p className='my-4'>Logged In as <b className='text-cdek-blue'>{user.name}</b></p>
+        <div className='my-4'>
+          <ButtonCustom
+            color="cdek-blue"
+            onClick={e=> router.replace("/admin")}
+          >
+            Go to Admin Page
+          </ButtonCustom>
+        </div>
+        <div className='my-4'>
+          <ButtonCustom
+            color="cdek-blue"
+            onClick={logOut}
+          >
+            Log out
+          </ButtonCustom>
+        </div>
+      </div>
     </div>
   )
 }
 
 const LogInForm = ({ logIn, tooglePane }) => {
   const [form, setForm] = useState({ email: "", password: "" })
+  const [clicked, setClicked] = useState(false)
 
-  const login = async (e) => {
-    e.preventDefault();
-    // console.log(form);
-
+  const login = async () => {
+    
+    const form_vals = Object.values(form)
+    
+    for (let i=0; i<form_vals.length; i++) {
+      if (form_vals[i] === "") return
+    }
+    
+    setClicked(true)
+    
     try {
       let headersList = {
         "Accept": "*/*",
@@ -79,12 +100,10 @@ const LogInForm = ({ logIn, tooglePane }) => {
 
       let response = await res.json();
 
-      if (res.status != 200) {
+      if (res.status != 200)
         alert(response.error);
-        return;
-      }
 
-      logIn({
+      else logIn({
         name: response.name,
         authtoken: response.authtoken
       });
@@ -96,30 +115,53 @@ const LogInForm = ({ logIn, tooglePane }) => {
     }
 
     setForm({ email: "", password: "" })
+    setClicked(false)
   }
 
   return (
-    <form onSubmit={login} className='text-center'>
-      <div >
-        <div>
-          <label className='inline-block w-full text-left mx-2 p-2 font-bold' htmlFor="email">Email :</label><br />
-          <input type="email" placeholder='Enter Your Email' name="email" value={form.email} onChange={(e) => setForm({ email: e.target.value, password: form.password })} id="email" className="mx-2 p-2 w-80" required />
+    <div className='text-center'>
+      <div className='inline-block m-2 p-2 border rounded-lg'>
+        <span className='font-bebas-neue text-3xl'>Log In to Continue</span>
+        <input 
+          className='px-4 py-3 bg-slate-200 outline-none block my-2' 
+          type="email" 
+          placeholder='Enter User Id' 
+          value={form.email} 
+          onChange={(e)=>setForm({...form, email: e.target.value})} 
+        />
+        <input 
+          className='px-4 py-3 bg-slate-200 outline-none block my-2' 
+          type="password" 
+          placeholder='Enter Password' 
+          value={form.password} 
+          onChange={(e)=>setForm({...form, password: e.target.value})} 
+        />
+        <div className='my-4'>
+          <ButtonCustom
+            color="cdek-blue"
+            disabled={clicked}
+            onClick={login}
+          >
+            {clicked ? <FaLoading/> : "Log In"}
+          </ButtonCustom>
         </div>
-        <div>
-          <label className='inline-block w-full text-left mx-2 p-2 font-bold' htmlFor="password">Password :</label><br />
-          <input type="password" placeholder='Enter Password' name="password" value={form.password} onChange={(e) => setForm({ email: form.email, password: e.target.value })} id="password" className="mx-2 p-2 w-80" required />
+        <div className='my-4'>
+          <GoogleSignIn />
         </div>
+        <p className='mt-8'>Don't have a account..? <b className='cursor-pointer text-cdek-blue' onClick={tooglePane}>Sign Up</b></p>
       </div>
-      <button type="submit" className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded">Submit</button>
-      <span className='block m-2 p-2'>Or...</span>
-      <GoogleSignIn />
-      <span className='block my-4'>Don't Have a account ? <button type='none' className='font-bold text-purple-800' onClick={tooglePane}>Sign Up</button></span>
-    </form>
+    </div>
   )
 }
 
 const SignupForm = ({ logIn, tooglePane }) => {
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState({
+    displayName: "",
+    email: "",
+    password: "",
+    profilePic: null
+  })
+  const [clicked, setClicked] = useState(false)
   const imgRef = useRef()
   const imgInpRef = useRef()
 
@@ -128,6 +170,14 @@ const SignupForm = ({ logIn, tooglePane }) => {
   }
 
   const handleSubmit = async () => {
+
+    const form_vals = Object.values(form)
+    
+    for (let i=0; i<form_vals.length; i++) {
+      if (form_vals[i] === "") return
+    }
+    
+    setClicked(true)
 
     const fileElement = imgInpRef.current
     let imgUrl = null
@@ -139,7 +189,7 @@ const SignupForm = ({ logIn, tooglePane }) => {
       let formdata = new FormData();
       formdata.set("file", file);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/assets/uploadProfilePic`, {
+      const response = await fetch(`/api/assets/uploadProfilePic`, {
         method: "POST",
         body: formdata,
         headers: {
@@ -147,14 +197,20 @@ const SignupForm = ({ logIn, tooglePane }) => {
         }
       })
 
-      imgUrl = await response.text()
+      if (response.status === 200)
+        imgUrl = await response.text()
+      else {
+        alert("Some thing went wrong when uploading the profile picture")
+        if (!confirm("would you like to create profile without uploading picture..?"))
+          return
+      }
       
       // setForm({...form, profilePic: await response.text()})
     }
 
     try {
 
-      let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/auth/signup`, {
+      let res = await fetch(`/api/auth/signup`, {
         method: "POST",
         body: JSON.stringify({...form, profilePic: imgUrl}),
         headers : {
@@ -167,10 +223,9 @@ const SignupForm = ({ logIn, tooglePane }) => {
 
       if (res.status != 200) {
         alert(response.error);
-        return;
       }
 
-      logIn({
+      else logIn({
         name: response.name,
         authtoken: response.authtoken
       });
@@ -180,35 +235,60 @@ const SignupForm = ({ logIn, tooglePane }) => {
       alert("Ooops Something went wrong \n(Kindly Share the screenshot or any photo if you are seeing this please) : \n" + err.toString())
       console.log(err);
     }
+
+    setClicked(false)
   }
 
   return (
     <div className='text-center'>
-      <div className=''>
-        <div className='px-2 my-2'>
-          <label htmlFor="displayName" className='inline-block pr-2 w-48 text-2xl text-left' >User Name :</label>
-          <input type="email" onChange={(e)=>setForm({...form, displayName : e.target.value })} name='displayName' id='displayName' className='px-2 py-1 outline-none rounded' placeholder='Enter a user name for your account...' />
+      <div className='inline-block m-2 p-2 border rounded-lg'>
+        <span className='font-bebas-neue text-3xl'>Create Your Account</span>
+        <input 
+          className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full' 
+          type="text" 
+          placeholder='Enter a Display Name' 
+          value={form.displayName} 
+          onChange={(e)=>setForm({...form, displayName: e.target.value})} 
+        />
+        <input 
+          className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full' 
+          type="email" 
+          placeholder='Enter User Id' 
+          value={form.email} 
+          onChange={(e)=>setForm({...form, email: e.target.value})} 
+        />
+        <input 
+          className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full' 
+          type="password" 
+          placeholder='Enter Password' 
+          value={form.password} 
+          onChange={(e)=>setForm({...form, password: e.target.value})} 
+        />
+        <input 
+          className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full' 
+          type="file" 
+          ref={imgInpRef}
+          onChange={handleChangePic} 
+        />
+        <img 
+          className='w-32 h-32 rounded-full mx-auto my-4 object-cover'
+          ref={imgRef}
+          src="/Assets/upload.webp"
+        />
+        <div className='my-4'>
+          <ButtonCustom
+            color="cdek-blue"
+            disabled={clicked}
+            onClick={handleSubmit}
+          >
+            {clicked ? <FaLoading/> : "Sign Up"}
+          </ButtonCustom>
         </div>
-        <div className='px-2 my-2 text-right'>
-          <label htmlFor="profilePic" className='inline-block px-2 w-48 text-2xl text-left' >Profile Picture :</label>
-          <input type="file" name='profilePic' id='profilePic' ref={imgInpRef} onChange={handleChangePic} className='px-3 w-72' placeholder='add a cool photo for your profile(optional)...' />
-          <div className='w-full text-left pr-4 my-2'>
-            <img src="/Assets/upload.webp" alt="upload" ref={imgRef} className='block h-32' />
-          </div>
+        <div className='my-4'>
+          <GoogleSignIn />
         </div>
-        <div className='px-2 my-2'>
-          <label htmlFor="email" className='inline-block pr-2 w-48 text-2xl text-left' >Email :</label>
-          <input type="email" onChange={(e)=>setForm({...form, email : e.target.value })} name='email' id='email' className='px-2 py-1 outline-none rounded' placeholder='Enter your email...' />
-        </div>
-        <div className='px-2 my-2'>
-          <label htmlFor="password" className='inline-block pr-2 w-48 text-2xl text-left' >Password :</label>
-          <input type="password" onChange={(e)=>setForm({...form, password : e.target.value })} name='password' id='password' className='px-2 py-1 outline-none rounded' placeholder='Enter a strong password...' />
-        </div>
+        <p className='mt-8'>Already have a account..? <b className='cursor-pointer text-cdek-blue' onClick={tooglePane}>Login</b></p>
       </div>
-      <button type="submit" className="bg-purple-800 text-yellow-100 p-2 mt-4 rounded" onClick={handleSubmit}>Submit</button>
-      <span className='block m-2 p-2'>Or...</span>
-      <GoogleSignIn />
-      <span className='block my-4'>Already have a account ? <button type='none' className='font-bold text-purple-800' onClick={tooglePane}>Log In</button></span>
     </div>
   )
 }

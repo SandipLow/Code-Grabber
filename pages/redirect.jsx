@@ -17,7 +17,7 @@ export default function Redirect({ auth }) {
     return (
         <>
         <h1>Logged In Successfully...You Can go to homepage</h1>
-        <Link href="/" className=' underline text-blue-400'>Go to Home</Link>
+        <Link href="/" className=' underline text-cdek-blue'>Go to Home</Link>
         </>
     )
 }

@@ -1,8 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Flex');
+@import url('https://fonts.googleapis.com/css?family=Bebas+Neue');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: rgba(55, 65, 81, 1);
-    color: rgba(243, 244, 246, 1);
+:root {
+    --cdek-black : #212121;
+    --cdek-aqua : #04D8FB;
+    --cdek-gray : #707171;
+    --cdek-blue : #0484BC;
+}
+
+/* Hide scroll bar for Safari Chrome Opera */
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scroll bar for IE Edge Firefox */
+* {
+    /* IE Edge */
+    -ms-overflow-style: none;
+    /* Firefox */
+    scrollbar-width: none;
+}
+
+.font-roboto-flex {
+    font-family: 'Roboto Flex';
+}
+
+.font-bebas-neue {
+    font-family: 'Bebas Neue';
 }

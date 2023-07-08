@@ -10,7 +10,7 @@ const apiRoute = nextConnect({
     },
 });
 
-apiRoute.post( async (req, res)=> {
+apiRoute.get( async (req, res)=> {
     const { gridfsProfilePicBucket, gfsProfilePic } = await profilePicBucket()
 
     const file = await gfsProfilePic.files.findOne({ filename: req.query.filename });

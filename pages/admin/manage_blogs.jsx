@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import React, {useState, useEffect} from 'react'
-import Link from 'next/link'
-import PostCard from '../../client/components/PostCard'
 import Spinner from 'react-spinner-material'
+import { Posts } from '../../client/components/Posts'
+import { BannerPost } from '../../client/components/Banner'
 
 const ManageBlogs = ({ auth }) => {
 
@@ -50,22 +50,21 @@ const ManageBlogs = ({ auth }) => {
         <Head>
             <title>Manage Blogs | Code Grabber</title>
         </Head>
-        <center>
-            {
-                !blogs ? <Spinner className='my-2 mx-2' radius={40} color={"#5b21b6"} stroke={5} visible />
-                : blogs.map((blog, ind)=>(
-                        <div className='flex items-center flex-wrap justify-center' style={{'width': 'fit-content'}} key={ind} >
-                            <PostCard img={blog.img} slug={blog.slug?blog.slug:undefined} title={blog.title} dark={false} shortDesc={blog.description}/>
-                            <div style={{'width': 'fit-content'}} >
-                                <button onClick={() => delete_blog(blog._id)} className='bg-white rounded-full text-lg mx-4 px-3 py-2 transition hover:bg-gray-500'>🗑️</button>
-                                <Link href={`blogs/${blog.slug}`}><button className='bg-white rounded-full text-lg mx-4 px-3 py-2 transition hover:bg-gray-500'>✍🏼</button></Link>
-                            </div>
-                            <span className='text-sm text-green-400 mx-7' id={`delete_op_result_${blog._id}`} ></span>
-                        </div>
-                    ) 
-                )
-            }
-        </center>
+
+        <BannerPost 
+            title='Manage Your Blogs'
+            img="/Assets/code_bg_02.jpg"
+        />
+
+        {
+            !blogs ? <Spinner className='my-2 mx-2' radius={40} color={"#5b21b6"} stroke={5} visible />
+            : <Posts 
+                title='Manage Your Blogs'
+                posts={blogs.map(blog=>{
+                    return {...blog, url: `/admin/blogs/${blog.slug}`}
+                })}
+            />
+        }
         </>
     )
 }

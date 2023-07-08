@@ -3,28 +3,37 @@
 }
 
 .md h1 {
-    padding: 2.5rem 2rem/* 40px 32px */;
-    margin-bottom: 0.5rem/* 8px */;
-    background-color: rgb(71 85 105);
-    font-size: 1.875rem/* 30px */;
-    line-height: 2.25rem/* 36px */;
-    font-weight: 700;
+    /* font-family: 'Bebas Neue'; */
+    color: var(--cdek-blue);
+    font-size: 2rem/* 24px */;
+    font-weight: bold;
+    line-height: 2rem/* 32px */;
+    margin-top: 2rem/* 16px 0 */;
 }
 
 .md h2 {
+    /* font-family: 'Bebas Neue'; */
+    color: var(--cdek-blue);
     font-size: 1.5rem/* 24px */;
-    line-height: 2rem/* 32px */;
-    color: rgb(233 213 255);
-    margin: 1rem 0/* 16px 0 */;
+    font-weight: bold;
+    line-height: 1.5rem/* 32px */;
+    margin-top: 1rem/* 16px 0 */;
 }
 
 .md p {
-    margin: 1rem 0;
+    margin-top: 1rem;
 }
 
 .md section {
-    background-color: rgb(30 41 59);
+    font-family: 'Roboto Flex';
     padding: 1rem/* 16px */;
     margin: 1rem/* 16px */;
-    margin-bottom: 0.5rem/* 8px */;
+}
+
+.md pre {
+    margin-top: 1rem;
+}
+
+.md img {
+    max-width: 20rem;
 }

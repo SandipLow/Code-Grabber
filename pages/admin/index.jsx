@@ -4,6 +4,9 @@ import CheckAuth from './check_auth';
 import { useRouter } from 'next/router';
 import { useUser } from '../../client/hooks/auth';
 import Spinner from 'react-spinner-material';
+import { BannerPost } from '../../client/components/Banner';
+import { ButtonCustom } from '../../client/components/Buttons';
+import { Posts } from '../../client/components/Posts';
 
 export default function Admin({ auth }) {
 
@@ -23,38 +26,48 @@ export default function Admin({ auth }) {
             <title>Admin Page | Code Grabber</title>
         </Head>
 
-        <div className='flex flex-wrap'>
-            {
-                user ? <>
-                    <h1 className='text-2xl my-5 mx-2 font-bold'>
-                        Welcome <span className=' mx-3 text-green-300' >{ user.displayName }</span>
-                    </h1>
-                    <img src={user.profilePic} alt="profile picture" className='h-14 w-14 bg-cover my-2 rounded-full' />
-                </>
-                : <Spinner className='mt-2 mx-2' radius={40} color={"#5b21b6"} stroke={5} visible />
-            }
-            <button onClick={logout} className="bg-purple-800 text-yellow-100 p-2 my-4 mx-2 rounded transition hover:bg-purple-900">Log out</button>
-        </div><hr />
-
-        <center className="flex flex-wrap justify-evenly p-10">
-            <Card title="Manage Blogs 📚" href="/admin/manage_blogs" img="/Assets/code_bg_02.jpg"/>
-            <Card title="Add Blog ✍🏼" href="/admin/addblog" img="/Assets/add_blog.jpg"/>
-            <Card title="Upload Asset ⬆" href="/admin/addasset" img="/Assets/upload.webp"/>
-        </center>
-        </>
-    )
-}
-
-const Card = (props) => {
-
-    return (
-        <Link href={props.href} passHref>
-            <div className='cursor-pointer bg-gray-800 text-white m-4 p-6 rounded transition hover:bg-gray-900' style={{"width": "fit-content"}} >
-                <h2 className=' text-xl mb-4'>{props.title}</h2>
-                <div className=' bg-white'>
-                    <img className=' w-96' src={props.img} />
+        <BannerPost 
+            title={
+                user ? <div className='flex flex-wrap items-center h-12'>
+                    Welcome <span className='mx-2 text-cdek-aqua'>{user.displayName}</span>
+                    <img src={user.profilePic} className='h-12 w-12 mx-2 rounded-full object-cover inline-block' />
+                    <div className='ml-2 text-base'>
+                        <ButtonCustom
+                            color='cdek-aqua'
+                            onClick={logout}
+                        >
+                            Log Out
+                        </ButtonCustom>
+                    </div>
                 </div>
-            </div>
-        </Link>
+                : <Spinner className='mx-2 bg-cdek-aqua' radius={40} stroke={5} visible />
+            }
+        />
+
+        <Posts 
+            title='Admin Panel'
+            posts={[
+                {
+                    title: 'Create Post',
+                    description: 'Create a new post',
+                    img: '/Assets/add_blog.jpg',
+                    url: '/admin/addblog'
+                },
+                {
+                    title: 'Manage Posts',
+                    description: 'Manage your posts',
+                    img: '/Assets/code_bg_02.jpg',
+                    url: '/admin/manage_blogs'
+                },
+                {
+                    title: 'Manage Assets',
+                    description: 'Manage Files in your system',
+                    img: '/Assets/upload.webp',
+                    url: '/admin/manage_assets'
+                },
+            ]}
+
+        />
+        </>
     )
 }

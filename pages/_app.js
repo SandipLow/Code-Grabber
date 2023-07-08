@@ -10,9 +10,10 @@ function useLoading() {
 
   const [loading, setLoading] = useState(false);
 
+  const handleStart = (url) => setLoading(true);
+  const handleComplete = (url) => setLoading(false);
+  
   useEffect(() => {
-    const handleStart = (url) => (url !== router.asPath) && setLoading(true);
-    const handleComplete = (url) => (url === router.asPath) && setLoading(false);
 
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleComplete)
@@ -23,12 +24,12 @@ function useLoading() {
       router.events.off('routeChangeComplete', handleComplete)
       router.events.off('routeChangeError', handleComplete)
     }
-  })
+  }, [router])
 
   return loading;
 }
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
 
   const [user, setUser] = useState(null)
 
@@ -68,5 +69,3 @@ function MyApp({ Component, pageProps }) {
   )
 
 }
-
-export default MyApp

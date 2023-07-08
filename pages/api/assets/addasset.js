@@ -20,7 +20,7 @@ apiRoute.post( async (req, res)=> {
     await connectToMongo()
 
     if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `https://codegrabber.vercel.app/api/assets/getasset/${req.file.filename}`;
+    const imgUrl = `/api/assets/getasset/${req.file.filename}`;
     res.send(imgUrl);
 })
 
@@ -29,6 +29,6 @@ export default apiRoute;
 // api config :
 export const config = {
     api: {
-      bodyParser: false, // Disallow body parsing, consume as stream
+        bodyParser: false, // Disallow body parsing, consume as stream
     },
-  };
+};
