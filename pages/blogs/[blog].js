@@ -8,22 +8,26 @@ const Blog = ({ data }) => {
         <>
         <Head>
             <title>{data ? data.title : "Not Found"} | Code Grabber</title>
-            <meta name="description" content={data && data.description} />
-            <link rel="canonical" href={`https://codegrabber.vercel.app/blogs/${data && data.slug}`} />
-            <meta property="og:locale" content="en_US" />
-            <meta property="og:type" content="article" />
-            <meta property="og:title" content={data && data.title} />
-            <meta property="og:description" content={data && data.description} />
-            <meta property="og:url" content={`https://codegrabber.vercel.app/blogs/${data && data.slug}`} />
-            <meta property="og:site_name" content="Code Grabber" />
-            <meta property="og:image" content={data && data.img} />
-            <meta property="og:image:width" content="720" />
-            <meta property="og:image:height" content="640" />
-            <meta property="og:image:type" content="image/png" />
+            <meta name="title" content={data.title} />
+            <meta name="description" content={data.description} />
+            <meta name="keywords" content={data.tags.join(", ")} />
+            <meta name="robots" content="index, follow" />
+            <meta name="language" content="English" />
+            <meta name="revisit-after" content="12 days" />
             <meta name="author" content="Sandip Low" />
-            <meta property="ya:ovs:adult" content="false" />
-            <meta property="ya:ovs:upload_date" content="2018-05-14T08:52:29+00:00" />
-            <meta property="ya:ovs:allow_embed" content="true" />
+
+            <meta property="og:title" content={data.title} />
+            <meta property="og:description" content={data.description}/>
+            <meta property="og:image" content={data.img}/>
+
+            <meta property="telegram:title" content={data.title} />
+            <meta property="telegram:description" content={data.description}/>
+            <meta property="telegram:image" content={data.img}/>
+
+            <meta property="whatsapp:title" content={data.title} />
+            <meta property="whatsapp:description" content={data.description} />
+            <meta property="whatsapp:image" content={data.img} />
+
             <link rel="manifest" href="/manifest.webmanifest" />
         </Head>
         

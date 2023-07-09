@@ -16,7 +16,7 @@ export default function FaLoading() {
 
   return (
     <div ref={eleRef}>
-        <FontAwesomeIcon icon={faSpinner} />
+        <FontAwesomeIcon className='h-10' icon={faSpinner} />
     </div>
   )
 }

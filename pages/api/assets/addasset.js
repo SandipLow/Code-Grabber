@@ -2,6 +2,7 @@ import nextConnect from "next-connect";
 import connectToMongo from "../../../server/db";
 import fetchUser from "../../../server/middleware/fetchUser"
 import { uploadAsset } from "../../../server/middleware/upload";
+import Asset from "../../../server/models/Asset";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -19,8 +20,18 @@ apiRoute.use(fetchUser)
 apiRoute.post( async (req, res)=> {
     await connectToMongo()
 
-    if (req.file === undefined) return res.send("you must select a file.");
+    if (req.file === undefined) 
+        return res.send("you must select a file.");
+    
+
     const imgUrl = `/api/assets/getasset/${req.file.filename}`;
+
+    await Asset.create({
+        user: req.user.id,
+        imgUrl: imgUrl,
+        filename: req.file.filename
+    })
+
     res.send(imgUrl);
 })
 

@@ -36,7 +36,7 @@ const Add_Blog = ({ auth }) => {
             "Content-Type": "application/json"
         }
 
-        let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/addblog`, {
+        let res = await fetch(`/api/blogs/addblog`, {
             method: "POST",
             body: JSON.stringify({ ...formData, user: auth.user.name }),
             headers: headersList
