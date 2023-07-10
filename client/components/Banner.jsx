@@ -14,8 +14,8 @@ export const BannerHome = (props)=> {
                     {/* <img src="/Assets/code_bg_01.bmp" loading="lazy" alt="" className='w-full h-full object-cover'/> */}
                     <Image src="/Assets/code_bg_01.bmp" loading="lazy" alt="" layout="fill" className="object-cover" />
                     <div className='text-white w-full absolute top-1/3 bottom-8 md:top-4/10 z-10' >
-                        <h1 className='md:top-56 text-5xl w-full text-center' >{"Welcome to "}
-                        <span className='font-bebas-neue bg-cdek-aqua text-cdek-black text-6xl pl-2'>Code</span>
+                        <h1 className='text-5xl w-full text-center' >{"Welcome to "}
+                        <span className='font-bebas-neue bg-cdek-aqua text-cdek-black text-6xl'>Code</span>
                         <span className='font-bebas-neue bg-cdek-black text-cdek-aqua text-6xl'>Grabber</span>
                         </h1>
                         <div className='w-full mt-4 flex justify-center text-center' style={{maxHeight: 'calc(66% - 2rem)'}}>

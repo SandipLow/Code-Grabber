@@ -1,5 +1,14 @@
 .md {
     font-size: large;
+    font-family: 'Roboto Flex';
+    padding: 2rem;
+    max-width: 100vw;
+}
+
+@media screen and (min-width: 1136px) {
+    .md {
+        max-width: 1136px;
+    }
 }
 
 .md h1 {
@@ -24,16 +33,16 @@
     margin-top: 1rem;
 }
 
-.md section {
-    font-family: 'Roboto Flex';
-    padding: 1rem/* 16px */;
-    margin: 1rem/* 16px */;
+.md a {
+    color: var(--cdek-blue);
 }
 
 .md pre {
     margin-top: 1rem;
+    width: 100%;
 }
 
 .md img {
-    max-width: 20rem;
+    width: 100%;
+    max-width: 40rem;
 }

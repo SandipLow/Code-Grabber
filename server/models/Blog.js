@@ -18,7 +18,8 @@ const BlogSchema = new Schema({
         required: true
     },
     likes : {
-        type: Number
+        type: Array,
+        default: []
     },
     tags : {
         type: Array,

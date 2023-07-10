@@ -2,6 +2,7 @@ import nextConnect from "next-connect";
 import User from "../../../server/models/User";
 import Blog from "../../../server/models/Blog";
 import connectToMongo from "../../../server/db";
+import { blogMapper } from "../../../server/functions/blog";
 
 // Get all the Blogs with query using GET: "/api/blogs/getallblogs" .
 // queries {
@@ -30,7 +31,7 @@ apiRoute.get( async (req, res)=> {
     // Tags
     const tags = req.query.tags
     if (tags) {
-        query.tags = { $all: tags.split(",") }
+        query.tags = { $all: tags.split(", ") }
     }
     
     // Username
@@ -44,7 +45,10 @@ apiRoute.get( async (req, res)=> {
         }
     }
 
-    const blogs = await Blog.find(query).limit(limit);
+    const _blogs = await Blog.find(query).limit(limit);
+    
+    const blogs = await blogMapper(_blogs)
+
     res.json(blogs);
 })
 

@@ -40,7 +40,6 @@ apiRoute.post( async (req, res)=> {
             title : req.body.title,
             content : req.body.content,
             description : req.body.description,
-            likes : 0,
             tags : req.body.tags,
             slug : req.body.slug,
             img : req.body.img,

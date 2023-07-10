@@ -8,7 +8,7 @@ import { faClose, faRefresh } from '@fortawesome/free-solid-svg-icons'
 import FaLoading from '../../client/components/Loader'
 import Spinner from 'react-spinner-material'
 
-const manage_assets = ()=> {
+const Manage_Assets = ()=> {
 
     const [refresh, setRefresh] = useState(true);
     const [addAssetModalOpen, setAddAssetModalOpen] = useState(false);
@@ -42,7 +42,7 @@ const manage_assets = ()=> {
     )
 }
 
-export default manage_assets
+export default Manage_Assets
 
 
 const AddAssetModal = ({ open, setOpen, refresh }) => {

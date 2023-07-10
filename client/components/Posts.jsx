@@ -13,7 +13,7 @@ export const Posts = ({ title, posts }) => {
 
             <h1 className="font-bebas-neue text-4xl pl-4 mb-2" >{title}</h1><hr className="mb-2" />
 
-            <div id='Games' className="flex flex-wrap justify-center md:justify-start md:flex-nowrap overflow-auto snap-x">
+            <div id='Games' className="flex overflow-auto snap-x">
                 {
                     posts.map((postData, index) => {
                         return <Post key={index} postData={postData} />

@@ -24,10 +24,10 @@ const Add_Blog = ({ auth }) => {
     const addBlog = async () => {
         const form_vals = Object.values(formData)
 
-        for (let i=0; i<form_vals.length; i++) {
+        for (let i = 0; i < form_vals.length; i++) {
             if (form_vals[i].length === 0) return
         }
-        
+
         setClicked(true)
 
         let headersList = {
@@ -74,34 +74,34 @@ const Add_Blog = ({ auth }) => {
 
             <CheckAuth />
 
-            <BannerPost 
+            <BannerPost
                 title="Add Blog"
                 img="/Assets/add_blog.jpg"
             />
 
             <div className='text-center w-full'>
-                <div className='inline-block m-2 p-2 border rounded-lg'>
+                <div className='inline-block m-2 p-2 border rounded-lg max-w-md'>
                     <span className='font-bebas-neue text-3xl'>Add Blog Details</span>
                     <input
-                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full'
                         type="text"
                         placeholder='Enter title of Blog'
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     />
                     <input
-                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full'
                         type="text"
                         placeholder='Enter Description of Blog'
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     />
                     <input
-                        className='px-4 py-3 bg-slate-200 outline-none block my-2 border'
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 border w-full'
                         type="text"
                         placeholder='Enter a unique slug for the Blog'
                         value={formData.slug}
-                        onChange={ async (e) => {
+                        onChange={async (e) => {
                             setFormData({ ...formData, slug: e.target.value })
 
                             if (e.target.value === "") {
@@ -123,10 +123,10 @@ const Add_Blog = ({ auth }) => {
                                     "Content-Type": "application/json"
                                 },
                                 signal: newController.signal,
-                                body: JSON.stringify({slug: e.target.value})
+                                body: JSON.stringify({ slug: e.target.value })
                             })
 
-                            
+
                             if (res.status === 200) {
                                 const available = await res.text()
 
@@ -135,57 +135,57 @@ const Add_Blog = ({ auth }) => {
                                     return
                                 }
                             }
-                            
+
                             e.target.style.borderColor = 'red'
 
                         }}
                     />
                     <input
-                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full'
                         type="text"
                         placeholder='Enter the Image url for the blog'
                         value={formData.img}
                         onChange={(e) => setFormData({ ...formData, img: e.target.value })}
                     />
-                    <div className='m-1 p-1 border text-left'>
+                    <div className='m-1 p-1 border flex flex-wrap w-full'>
                         {
-                            formData.tags.length === 0 ? 
+                            formData.tags.length === 0 ?
                                 <p className='text-cdek-gray'>Enter a new Tag</p>
-                            : formData.tags.map((tag, index)=> 
-                                <span 
-                                    key={index} 
-                                    onClick={e=> {
-                                        // delete tag
-                                        let newTags = formData.tags.filter(t=> t !== tag)
-                                        setFormData({...formData, tags: newTags})
-                                    }}
-                                    className='p-1 mx-2 rounded-xl cursor-pointer bg-slate-300 text-cdek-gray'
-                                >
-                                    #{tag}
-                                </span>)
+                                : formData.tags.map((tag, index) =>
+                                    <span
+                                        key={index}
+                                        onClick={e => {
+                                            // delete tag
+                                            let newTags = formData.tags.filter(t => t !== tag)
+                                            setFormData({ ...formData, tags: newTags })
+                                        }}
+                                        className='w-fit p-1 m-2 rounded-xl cursor-pointer bg-slate-300 text-cdek-gray'
+                                    >
+                                        #{tag}
+                                    </span>)
                         }
                     </div>
-                    <input 
+                    <input
                         className='px-4 py-3 bg-slate-200 outline-none block my-2'
                         type="text"
                         placeholder='Add a new tag'
                         value={newTag}
-                        onChange={e=>setNewTag(e.target.value)}
+                        onChange={e => setNewTag(e.target.value)}
                     />
                     <ButtonCustom
                         color="cdek-blue"
-                        onClick={()=> {
-                            setFormData({...formData, tags: [...formData.tags, newTag]})
+                        onClick={() => {
+                            setFormData({ ...formData, tags: [...formData.tags, newTag] })
                             setNewTag("")
                         }}
                     >
                         Add
                     </ButtonCustom>
                     <img
-                        height={100} 
-                        width={100} 
-                        src={formData.img} 
-                        alt="Image Url" 
+                        height={100}
+                        width={100}
+                        src={formData.img}
+                        alt="Image Url"
                     />
                     <div className='my-4'>
                         <ButtonCustom
@@ -212,7 +212,7 @@ const Add_Blog = ({ auth }) => {
                 <div className='w-1/2 inline-block'>
                     {
                         formData.content === "" ? <p className='m-3 p-3 w-full text-left text-cdek-gray'>Preview of the witten blog</p>
-                        : <MarkDownContent content={formData.content} />
+                            : <MarkDownContent content={formData.content} />
                     }
                 </div>
             </div>

@@ -48,7 +48,7 @@ const Blog = (props) => {
     return (
         <>
             <Head>
-                <title>Add Blog | Code Grabber</title>
+                <title>Edit Blog | Code Grabber</title>
             </Head>
 
             <CheckAuth />
@@ -59,24 +59,24 @@ const Blog = (props) => {
             />
 
             <div className='text-center w-full'>
-                <div className='inline-block m-2 p-2 border rounded-lg'>
+                <div className='inline-block m-2 p-2 border rounded-lg max-w-md'>
                     <span className='font-bebas-neue text-3xl'>Add Blog Details</span>
                     <input
-                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full'
                         type="text"
                         placeholder='Enter title of Blog'
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     />
                     <input
-                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full'
                         type="text"
                         placeholder='Enter Description of Blog'
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     />
                     <input
-                        className='px-4 py-3 bg-slate-200 outline-none block my-2 border'
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 border w-full'
                         type="text"
                         placeholder='Enter a unique slug for the Blog'
                         value={formData.slug}
@@ -95,7 +95,7 @@ const Blog = (props) => {
                             const newController = new AbortController()
                             setController(newController)
 
-                            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/blogs/getslugstatus`, {
+                            const res = await fetch(`/api/blogs/getslugstatus`, {
                                 method: "POST",
                                 headers: {
                                     "Accept": "*/*",
@@ -120,13 +120,13 @@ const Blog = (props) => {
                         }}
                     />
                     <input
-                        className='px-4 py-3 bg-slate-200 outline-none block my-2'
+                        className='px-4 py-3 bg-slate-200 outline-none block my-2 w-full'
                         type="text"
                         placeholder='Enter the Image url for the blog'
                         value={formData.img}
                         onChange={(e) => setFormData({ ...formData, img: e.target.value })}
                     />
-                    <div className='m-1 p-1 border text-left'>
+                    <div className='m-1 p-1 border flex flex-wrap w-full'>
                         {
                             formData.tags.length === 0 ? 
                                 <p className='text-cdek-gray'>Enter a new Tag</p>
@@ -138,7 +138,7 @@ const Blog = (props) => {
                                         let newTags = formData.tags.filter(t=> t !== tag)
                                         setFormData({...formData, tags: newTags})
                                     }}
-                                    className='p-1 mx-2 rounded-xl cursor-pointer bg-slate-300 text-cdek-gray'
+                                    className='w-fit p-1 m-2 rounded-xl cursor-pointer bg-slate-300 text-cdek-gray'
                                 >
                                     #{tag}
                                 </span>)

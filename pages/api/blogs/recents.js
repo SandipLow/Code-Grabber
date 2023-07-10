@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 import connectToMongo from "../../../server/db"
 import Blog from "../../../server/models/Blog"
+import { blogMapper } from "../../../server/functions/blog";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -14,7 +15,9 @@ const apiRoute = nextConnect({
 apiRoute.get( async (req, res)=> {
     await connectToMongo()
 
-    const blogs = await Blog.find({}).sort({date_modified : -1}).limit(6);
+    const _blogs = await Blog.find({}).sort({date_modified : -1}).limit(6);
+    const blogs = await blogMapper(_blogs);
+
     res.json(blogs);
 })
 

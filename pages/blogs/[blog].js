@@ -2,7 +2,8 @@
 import Head from 'next/head'
 import BlogRender from '../../client/components/BlogRender'
 
-const Blog = ({ data }) => {
+const Blog = ({ data, auth }) => {
+    const { user } = auth
 
     return (
         <>
@@ -31,7 +32,7 @@ const Blog = ({ data }) => {
             <link rel="manifest" href="/manifest.webmanifest" />
         </Head>
         
-        {data ? <BlogRender data={data} />
+        {data ? <BlogRender data={data} user={user} />
         :   <div className="text-center my-10">
             <h1 className='text-3xl'>Sorry, No Such Blog Found...!</h1>
             <div className='w-full flex justify-center mt-10'>

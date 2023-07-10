@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 import connectToMongo from "../../../../server/db"
 import Blog from "../../../../server/models/Blog"
+import { blogMapper } from "../../../../server/functions/blog";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -14,13 +15,18 @@ const apiRoute = nextConnect({
 apiRoute.get( async (req, res)=> {
     await connectToMongo()
 
-    const blog = await Blog.findOne({ slug: req.query.slg })
-    if(!blog) {
+    const ___blog = await Blog.findOne({ slug: req.query.slg })
+    
+    if(!___blog) {
         res.status(404).send("No Such blog found...!!!")
+        return
     }
-    else {
-        res.json(blog);
-    }
+    
+    const __blog = [___blog]
+    const _blog = await blogMapper(__blog);
+    const blog = _blog[0]
+    
+    res.json(blog);
 })
 
 export default apiRoute;
