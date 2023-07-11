@@ -7,6 +7,7 @@ import { faFacebookSquare, faSquareWhatsapp, faTelegram } from "@fortawesome/fre
 
 
 export const Posts = ({ title, posts }) => {
+    console.log(posts);
 
     return (
         <section className='py-6 px-2' >

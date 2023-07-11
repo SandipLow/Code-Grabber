@@ -11,7 +11,7 @@ export const blogMapper = (blogs, userReq=true) => {
     return Promise.all(blogs.map(async(blog)=>{
         let user
 
-        if (userReq) {
+        if (userReq && blog.user !== "*") {
             let userDetails = await getUser(blog.user)
             user = {
                 displayName: userDetails.displayName,

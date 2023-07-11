@@ -26,18 +26,16 @@ apiRoute.post( async (req, res)=> {
         return
     }
 
-    const blog = await Blog.findOne({ slug: slg })
+    const blog = await Blog.findOne({ slug: slg }).lean()
 
     if(!blog) {
         res.status(404).send("No Such blog found...!!!")
         return
     }
 
-    if (!blog.likes) {
-        blog.likes = [
-            user.id
-        ]
-        await blog.save()
+    if (typeof blog.likes === "number" || typeof blog.likes === "undefined") {
+        blog.likes = [ user.id ]
+        await Blog.findOneAndUpdate({ slug: slg }, { $set: { likes: blog.likes } })
         res.status(200).json({message: "liked"})
     }
 
@@ -45,15 +43,17 @@ apiRoute.post( async (req, res)=> {
         const isLiked = blog.likes.includes(user.id)
     
         if(isLiked) {
-            await blog.likes.pull(user.id)
-            await blog.save()
-            res.status(200).json({message: "unliked"})
+            blog.likes.splice(blog.likes.indexOf(user.id), 1)
+
+            await Blog.findOneAndUpdate({ slug: slg }, { $set: { likes: blog.likes } })
+            res.status(200).json({message: "unliked", likes: blog.likes.length})
         }
     
         if(!isLiked) {
-            await blog.likes.push(user.id)
-            await blog.save()
-            res.status(200).json({message: "liked"})
+            blog.likes.push(user.id)
+
+            await Blog.findOneAndUpdate({ slug: slg }, { $set: { likes: blog.likes } })
+            res.status(200).json({message: "liked", likes: blog.likes.length})
         }
     }
 

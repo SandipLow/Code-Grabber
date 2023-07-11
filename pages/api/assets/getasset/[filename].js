@@ -1,5 +1,6 @@
 import nextConnect from "next-connect";
 import { assetBucket } from "../../../../server/buckets";
+import connectToMongo from "../../../../server/db";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -11,6 +12,8 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.get( async (req, res)=> {
+    await connectToMongo()
+    
     const { gridfsAssetBucket, gfsAsset } = await assetBucket()
 
     const file = await gfsAsset.files.findOne({ filename: req.query.filename });

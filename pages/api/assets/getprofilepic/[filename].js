@@ -1,5 +1,6 @@
 import nextConnect from "next-connect";
 import { profilePicBucket } from "../../../../server/buckets";
+import connectToMongo from "../../../../server/db";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -11,6 +12,8 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.get( async (req, res)=> {
+    await connectToMongo()
+    
     const { gridfsProfilePicBucket, gfsProfilePic } = await profilePicBucket()
 
     const file = await gfsProfilePic.files.findOne({ filename: req.query.filename });

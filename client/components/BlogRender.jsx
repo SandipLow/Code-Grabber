@@ -11,7 +11,8 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function BlogRender({ data, user }) {
 
-    const [like, setLike] = useState(false)
+    const [liked, setLiked] = useState(false)
+    const [likes, setLikes] = useState(data.likes)
 
     useEffect(() => {
         const checkLike = async () => {
@@ -26,7 +27,7 @@ export default function BlogRender({ data, user }) {
             if (res.status === 200) {
                 const resJson = await res.json()
                 const liked = resJson.find(blog => blog.slug === data.slug)
-                setLike(liked ? true : false)
+                setLiked(liked ? true : false)
             }
         }
 
@@ -46,7 +47,8 @@ export default function BlogRender({ data, user }) {
 
         if (res.status === 200) {
             const resJson = await res.json()
-            setLike(resJson.message === "liked")
+            setLiked(resJson.message === "liked")
+            setLikes(resJson.likes)
         }
 
             
@@ -70,11 +72,12 @@ export default function BlogRender({ data, user }) {
                         onClick={handleLike} 
                         className="border rounded-full m-4 p-4"
                         style={{
-                            color: like ? "var(--cdek-blue)" : "var(--cdek-black)"
+                            color: liked ? "var(--cdek-blue)" : "var(--cdek-black)"
                         }}
                     >
                         <FontAwesomeIcon icon={faHeart} className="h-8 w-8" />
                     </button>
+                    <span>{likes}</span>
                 </div>
             ) : null
         }
