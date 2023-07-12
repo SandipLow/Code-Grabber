@@ -9,7 +9,7 @@ export default function Home({ recentPosts, popularPosts }) {
       <Head>
         <title>Code Grabber</title>
         <meta name="title" content="Code Grabber" />
-        <meta name="description" content="Code snipptes for the coders from the coders" />
+        <meta name="description" content="Welcome to CodeGrabber, the ultimate blogging platform for coders and developers! CodeGrabber is designed to be a haven for coding enthusiasts where they can share their knowledge, insights, and experiences with the programming community." />
         <meta name="keywords" content="JavaScript, Python, Java, C++, Ruby, PHP, Swift, Go, Rust, Kotlin, HTML, CSS, Responsive web design, Front-end development, Back-end development, UX/UI design, React, Angular, Vue.js, iOS development, Android development, Swift programming, Kotlin programming, Data visualization, Machine learning, Artificial intelligence, Python libraries, Agile development, Scrum, Test-driven development, Continuous integration, Continuous deployment, Version control, Node.js, Django, Laravel, Ruby on Rails, Flask, Docker, Kubernetes, OOP, Functional programming, Algorithms, Data structures, Design patterns, API development"/>
         <meta name="robots" content="index, follow" />
         <meta name="language" content="English" />

@@ -97,7 +97,7 @@ const AddAssetModal = ({ open, setOpen, refresh }) => {
     
 
     return open ? (
-        <div className='absolute top-0 bottom-0 w-screen h-screen bg-cdek-black bg-opacity-70 grid place-content-center'>
+        <div className='fixed top-0 left-0 z-10 h-screen w-screen bg-black bg-opacity-80 grid place-content-center'>
             <button 
                 className="absolute top-12 right-4 w-6 h-6 text-3xl text-white text-opacity-50 hover:text-opacity-100 transition-colors"
                 onClick={e=>{

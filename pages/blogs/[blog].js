@@ -15,7 +15,7 @@ const Blog = ({ data, auth }) => {
             <meta name="robots" content="index, follow" />
             <meta name="language" content="English" />
             <meta name="revisit-after" content="12 days" />
-            <meta name="author" content="Sandip Low" />
+            <meta name="author" content={data.user?.displayName} />
 
             <meta property="og:title" content={data.title} />
             <meta property="og:description" content={data.description}/>
