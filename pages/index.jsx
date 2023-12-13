@@ -18,8 +18,43 @@ export default function Home({ recentPosts, popularPosts }) {
 
       <BannerHome />
 
+      <h1 className="font-bebas-neue text-4xl pl-4 mt-12" >Core Features</h1><hr className="mb-2" />
+
+      <section className="grid justify-items-center w-full p-4 mt-12">
+        <div className='max-w-7xl text-left w-full flex flex-wrap justify-evenly items-center'>
+          <div className='p-4 mx-2 flex-grow text-center rounded-lg bg-slate-200'>
+            <img className='h-96 w-72 object-cover inline-block' src="/Assets/upload.webp" alt="upload" />
+          </div>
+          <div className='p-4 mx-2 flex-grow'>
+            <h2 className=' font-bold text-2xl mb-4'>
+              Built in online Asset manager
+            </h2>
+            <p>
+              Manage assets and images for your blog with our built in asset manager. Get free storage upto 1GB.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid justify-items-center w-full p-4 mt-12">
+        <div className='max-w-7xl text-left w-full flex flex-wrap justify-evenly items-center'>
+          <div className='p-4 mx-2 flex-grow'>
+            <h2 className=' font-bold text-2xl mb-4'>
+              Markdown support for writing blogs
+            </h2>
+            <p>
+              Write blogs in markdown and get it converted to HTML on the fly. No need to learn HTML.
+            </p>
+          </div>
+          <div className='p-4 mx-2 flex-grow text-center rounded-lg bg-slate-200'>
+            <img className='w-96 h-72 object-cover inline-block' src="https://miro.medium.com/v2/resize:fit:1200/0*lzRmzAy5OICef7rK.png" alt="md" />
+          </div>
+        </div>
+      </section>
+
       <Posts title="Recent Posts" posts={recentPosts} />
       <Posts title="Popular Posts" posts={popularPosts} />
+
     </>
   )
 }

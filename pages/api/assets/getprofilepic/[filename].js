@@ -4,6 +4,7 @@ import connectToMongo from "../../../../server/db";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
+        console.log(error);
         res.status(501).json({ error: `Sorry something Happened! ${error.message}` });
     },
     onNoMatch(req, res) {
