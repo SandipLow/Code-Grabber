@@ -10,8 +10,8 @@ function Navbar({ auth }) {
             <ul className='flex w-fit font-roboto-flex text-cdek-aqua' >
                 <Link href='/' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>Home</li></Link>
                 <Link href='/blogs' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>Blogs</li></Link>
-                <Link href='#' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>About</li></Link>
-                <Link href='#' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>Contact</li></Link>
+                {/* <Link href='#' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>About</li></Link>
+                <Link href='#' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>Contact</li></Link> */}
                 {
                     !auth.user ? <Link href='/auth' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>Log in</li></Link>
                     : <Link href='/admin' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>Admin</li></Link>

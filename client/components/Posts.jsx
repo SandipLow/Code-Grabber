@@ -15,9 +15,12 @@ export const Posts = ({ title, posts }) => {
 
             <div id='Games' className="flex overflow-auto snap-x">
                 {
-                    posts.map((postData, index) => {
-                        return <Post key={index} postData={postData} />
-                    })
+                    posts.length === 0 ? 
+                        <h1 className='text-2xl text-center w-full text-gray-400' >No posts found</h1>
+                    :
+                        posts.map((postData, index) => {
+                            return <Post key={index} postData={postData} />
+                        })
                 }
             </div>
 

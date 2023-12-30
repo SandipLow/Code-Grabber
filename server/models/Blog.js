@@ -42,5 +42,7 @@ const BlogSchema = new Schema({
     }
 })
 
+BlogSchema.index({ title: 'text', content: 'text', description: 'text', tags: 'text' });
+
 const Blog = models.blogposts || model('blogposts', BlogSchema);
 export default Blog;

@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import { BannerHome } from '../client/components/Banner';
-import { Posts } from '../client/components/Posts';
+import Image from 'next/image';
 
-export default function Home({ recentPosts, popularPosts }) {
+export default function Home() {
 
   return (
     <>
@@ -23,7 +23,13 @@ export default function Home({ recentPosts, popularPosts }) {
       <section className="grid justify-items-center w-full p-4 mt-12">
         <div className='max-w-7xl text-left w-full flex flex-wrap justify-evenly items-center'>
           <div className='p-4 mx-2 flex-grow text-center rounded-lg bg-slate-200'>
-            <img className='h-96 w-72 object-cover inline-block' src="/Assets/upload.webp" alt="upload" />
+            <Image 
+              className='h-96 w-72 object-cover inline-block' 
+              src="/Assets/upload.webp" 
+              alt="upload" 
+              width={288} // replace with your desired width
+              height={384} // replace with your desired height
+            />
           </div>
           <div className='p-4 mx-2 flex-grow'>
             <h2 className=' font-bold text-2xl mb-4'>
@@ -47,26 +53,19 @@ export default function Home({ recentPosts, popularPosts }) {
             </p>
           </div>
           <div className='p-4 mx-2 flex-grow text-center rounded-lg bg-slate-200'>
-            <img className='w-96 h-72 object-cover inline-block' src="https://miro.medium.com/v2/resize:fit:1200/0*lzRmzAy5OICef7rK.png" alt="md" />
+            <Image 
+              src="/Assets/markdown_support.png" 
+              alt="md" 
+              width={384} // replace with your desired width
+              height={288} // replace with your desired height
+              className='object-cover inline-block'
+            />
           </div>
         </div>
       </section>
-
-      <Posts title="Recent Posts" posts={recentPosts} />
-      <Posts title="Popular Posts" posts={popularPosts} />
 
     </>
   )
 }
 
-export async function getServerSideProps(context) {
-  let fet = await fetch(`${process.env.BACKEND_HOST}/api/blogs/recents`);
-  let recentPosts = await fet.json();
 
-  let fet2 = await fetch(`${process.env.BACKEND_HOST}/api/blogs/populars`);
-  let popularPosts = await fet2.json();
-
-  return {
-    props: { recentPosts, popularPosts }
-  }
-}
