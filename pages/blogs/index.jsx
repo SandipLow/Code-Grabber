@@ -7,26 +7,8 @@ import { Posts } from '../../client/components/Posts';
 
 export default function Page({ recentPosts, popularPosts }) {
 
-    const [likedBlogs, setLikedBlogs] = useState([]);
     const [query, setQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
-
-
-    useEffect(()=> {
-        fetch(`/api/blogs/get-user-liked-blogs`, {
-            method: 'GET',
-            headers: {
-                "Accept": "*/*",
-                "auth-token": JSON.parse(localStorage.getItem("user")).authtoken,
-                "Content-Type": "application/json"
-            }
-        })
-        .then(res=> res.json())
-        .then(data=> {
-            setLikedBlogs(data);
-        })
-        .catch(err=> console.log(err))
-    }, [])
     
 
     const handleSearch = ()=> {
@@ -71,9 +53,38 @@ export default function Page({ recentPosts, popularPosts }) {
 
         <Posts title="Recent Posts" posts={recentPosts} />
         <Posts title="Popular Posts" posts={popularPosts} />
-        <Posts title="Liked Posts" posts={likedBlogs} />
+
+        {
+            localStorage.getItem('user') ? 
+                <LikedBlogs />
+            :
+                null
+        }
         </>
     )
+}
+
+const LikedBlogs = ()=> {
+    const [likedBlogs, setLikedBlogs] = useState([]);
+
+    useEffect(()=> {
+        fetch(`/api/blogs/get-user-liked-blogs`, {
+            method: 'GET',
+            headers: {
+                "Accept": "*/*",
+                "auth-token": JSON.parse(localStorage.getItem("user")).authtoken,
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res=> res.json())
+        .then(data=> {
+            setLikedBlogs(data);
+        })
+        .catch(err=> console.log(err))
+    }, [])
+
+
+    return <Posts title="Liked Posts" posts={likedBlogs} />
 }
 
 export async function getServerSideProps(context) {
