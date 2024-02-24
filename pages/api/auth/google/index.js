@@ -1,5 +1,5 @@
 import nextConnect from "next-connect";
-import { oauth2Client } from "../../../../server/oauth/google";
+import { oauth2Client } from "../../../../server/services/google";
 
 const api = nextConnect({
     onError(error, req, res) {

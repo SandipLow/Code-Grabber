@@ -1,6 +1,6 @@
 import nextConnect from "next-connect";
 import Blog from "../../../server/models/Blog";
-import connectToMongo from "../../../server/db";
+import connectToMongo from "../../../server/services/mongodb";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {

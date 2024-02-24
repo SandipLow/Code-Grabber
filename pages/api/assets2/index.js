@@ -1,8 +1,7 @@
 import nextConnect from 'next-connect';
 import connectToMongo from '../../../server/services/mongodb';
-import Asset from '../../../server/models/Asset';
 import fetchUser from '../../../server/middleware/fetchUser';
-
+import Asset from '../../../server/models/Asset';
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -14,14 +13,24 @@ const apiRoute = nextConnect({
     },
 });
 
-apiRoute.use(fetchUser);
 
-apiRoute.get(async (req, res) => {
+apiRoute.use(async (req, res, next) => {
     await connectToMongo();
+    next();
+})
 
+
+// send user's assets
+apiRoute.get(fetchUser, async (req, res) => {
     const assets = await Asset.find({ user: req.user.id }).sort({ createdAt: -1 });
-
     res.json({ assets });
-});
+})
+
+
+// upload asset
+apiRoute.post(fetchUser,  async (req, res) => {
+    res.send("to be implemented");
+})
+
 
 export default apiRoute;

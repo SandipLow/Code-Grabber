@@ -10,8 +10,7 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.post( async (req, res)=> {
-    console.log(req.body);
-    res.json({ hello: "world" });
+    res.send("code-grabber api is working!");
 })
 
 export default apiRoute;

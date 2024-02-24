@@ -1,7 +1,7 @@
 import nextConnect from "next-connect";
 import { assetBucket } from "../../../../server/buckets";
 import Asset from "../../../../server/models/Asset";
-import connectToMongo from "../../../../server/db";
+import connectToMongo from "../../../../server/services/mongodb";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {

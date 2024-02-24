@@ -18,7 +18,7 @@ function Navbar({ auth }) {
                 }
             </ul>
             <div className='hidden md:block md:h-10 md:p-1 w-12 relative'>
-                <Image src="/icon-192x192.png" alt="logo" layout="fill" objectFit="contain" objectPosition="center" />
+                <Image src="/manifest/code_grabber.svg" alt="logo" layout="fill" objectFit="contain" objectPosition="center" />
             </div>
         </nav>
         </>

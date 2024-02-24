@@ -1,7 +1,7 @@
 import nextConnect from "next-connect";
 import User from "../../../server/models/User";
 import fetchUser from "../../../server/middleware/fetchUser";
-import connectToMongo from "../../../server/db";
+import connectToMongo from "../../../server/services/mongodb";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {

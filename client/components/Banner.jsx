@@ -40,7 +40,7 @@ export const BannerPost = ({ title, img, description, tags })=> {
             <div className="absolute h-full w-full top-0 bg-cdek-black bg-opacity-70"></div>
             <div className="absolute h-full w-full top-0 grid place-content-center">
                 <div className='text-center max-w-2xl'>
-                    <div className='border-2 border-solid text-4xl px-2 py-1 grid place-content-center'>
+                    <div className='text-4xl px-2 py-1 grid place-content-center'>
                         <div>
                             {title}
                         </div>

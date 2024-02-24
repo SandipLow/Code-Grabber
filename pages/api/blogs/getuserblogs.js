@@ -1,5 +1,5 @@
 import nextConnect from "next-connect";
-import connectToMongo from "../../../server/db";
+import connectToMongo from "../../../server/services/mongodb";
 import fetchUser from "../../../server/middleware/fetchUser";
 import Blog from "../../../server/models/Blog";
 import { blogMapper } from "../../../server/functions/blog";

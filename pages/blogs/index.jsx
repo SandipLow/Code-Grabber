@@ -4,11 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import Head from 'next/head'
 import { Posts } from '../../client/components/Posts';
+import useInitialLoad from '../../client/hooks/initialLoad'
 
 export default function Page({ recentPosts, popularPosts }) {
 
     const [query, setQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
+
+    const initialLoad = useInitialLoad();
     
 
     const handleSearch = ()=> {
@@ -55,7 +58,7 @@ export default function Page({ recentPosts, popularPosts }) {
         <Posts title="Popular Posts" posts={popularPosts} />
 
         {
-            localStorage.getItem('user') ? 
+            !initialLoad ? 
                 <LikedBlogs />
             :
                 null

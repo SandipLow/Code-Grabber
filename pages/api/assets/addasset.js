@@ -1,5 +1,5 @@
 import nextConnect from "next-connect";
-import connectToMongo from "../../../server/db";
+import connectToMongo from "../../../server/services/mongodb";
 import fetchUser from "../../../server/middleware/fetchUser"
 import { uploadAsset } from "../../../server/middleware/upload";
 import Asset from "../../../server/models/Asset";

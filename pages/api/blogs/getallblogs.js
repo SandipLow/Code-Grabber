@@ -1,7 +1,7 @@
 import nextConnect from "next-connect";
 import User from "../../../server/models/User";
 import Blog from "../../../server/models/Blog";
-import connectToMongo from "../../../server/db";
+import connectToMongo from "../../../server/services/mongodb";
 import { blogMapper } from "../../../server/functions/blog";
 
 // Get all the Blogs with query using GET: "/api/blogs/getallblogs" .

@@ -1,7 +1,7 @@
 import { google } from "googleapis";
 import nextConnect from "next-connect";
 import jwt from "jsonwebtoken"
-import { oauth2Client } from "../../../../server/oauth/google";
+import { oauth2Client } from "../../../../server/services/google";
 import User from '../../../../server/models/User'
 
 const JWT_DATA = "sandip@low"

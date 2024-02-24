@@ -1,5 +1,5 @@
 import nextConnect from "next-connect";
-import connectToMongo from "../../../server/db";
+import connectToMongo from "../../../server/services/mongodb";
 import Blog from "../../../server/models/Blog";
 
 const apiRoute = nextConnect({

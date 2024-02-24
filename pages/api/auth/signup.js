@@ -1,7 +1,7 @@
 import nextConnect from "next-connect";
 import bcrypt from "bcryptjs"
 import User from "../../../server/models/User";
-import connectToMongo from "../../../server/db";
+import connectToMongo from "../../../server/services/mongodb";
 import jwt from "jsonwebtoken"
 import validate from "../../../server/middleware/validate";
 import { body, validationResult } from "express-validator";
