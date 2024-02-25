@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { Posts } from '../../client/components/Posts';
 import useInitialLoad from '../../client/hooks/initialLoad'
 
-export default function Page({ recentPosts, popularPosts }) {
+export default function Page({ recentPosts, popularPosts, auth }) {
 
     const [query, setQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
@@ -58,7 +58,7 @@ export default function Page({ recentPosts, popularPosts }) {
         <Posts title="Popular Posts" posts={popularPosts} />
 
         {
-            !initialLoad ? 
+            !initialLoad && auth.user ? 
                 <LikedBlogs />
             :
                 null
