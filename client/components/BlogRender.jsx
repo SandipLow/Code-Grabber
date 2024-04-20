@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import mdStyle from "../../styles/mdstyles.module.css"
-import useInitialLoad from "../hooks/initialLoad"
 
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDarkReasonable as syntax_style } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -97,10 +96,9 @@ export default function BlogRender({ data, user }) {
 }
 
 export const MarkDownContent = ({ content }) => {
-    const initialLoad = useInitialLoad()
 
     return (
-        <article className={mdStyle.md} >
+        <article className={`prose lg:prose-lg ${mdStyle.md}`} >
             <ReactMarkdown
                 components={{
                     code: ({ node, inline, className, children, ...props }) => {

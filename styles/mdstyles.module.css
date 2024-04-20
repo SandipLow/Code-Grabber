@@ -1,48 +1,65 @@
+/* General styling for Markdown content */
 .md {
     font-size: large;
-    font-family: 'Roboto Flex';
+    font-family: 'Roboto Flex', sans-serif; /* Added fallback font */
     padding: 2rem;
     max-width: 100vw;
+    line-height: 1.6; /* Improved readability */
+    color: #333; /* Default text color for better contrast */
+    transition: all;
 }
 
+/* Responsive design */
 @media screen and (min-width: 1136px) {
     .md {
         max-width: 1136px;
+        margin: 0 auto; /* Center the content */
     }
 }
 
-.md h1 {
-    /* font-family: 'Bebas Neue'; */
+/* Styling for headers */
+.md h1, .md h2 {
     color: var(--cdek-blue);
-    font-size: 2rem/* 24px */;
     font-weight: bold;
-    line-height: 2rem/* 32px */;
-    margin-top: 2rem/* 16px 0 */;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.md h1 {
+    font-size: 2rem;
+    line-height: 2.5rem;
 }
 
 .md h2 {
-    /* font-family: 'Bebas Neue'; */
-    color: var(--cdek-blue);
-    font-size: 1.5rem/* 24px */;
-    font-weight: bold;
-    line-height: 1.5rem/* 32px */;
-    margin-top: 1rem/* 16px 0 */;
+    font-size: 1.5rem;
+    line-height: 2rem;
 }
 
+/* Styling for paragraphs */
 .md p {
     margin-top: 1rem;
 }
 
+/* Styling for links */
 .md a {
     color: var(--cdek-blue);
+    text-decoration: none; /* Remove underline */
 }
 
+.md a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* Styling for code blocks */
 .md pre {
     margin-top: 1rem;
     width: 100%;
+    overflow-x: auto; /* Add scrollbar if content is wider than the container */
 }
 
+/* Styling for images */
 .md img {
     width: 100%;
     max-width: 40rem;
+    height: auto; /* Maintain aspect ratio */
 }
