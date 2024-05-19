@@ -1,20 +1,35 @@
 // react and components :
 import Head from 'next/head'
 import BlogRender from '../../client/components/BlogRender'
+import Image from 'next/image'
 
 const Blog = ({ data, auth }) => {
     const { user } = auth
 
+    if (!data) {
+        return (
+            <>
+            <Head>
+                <title>Not Found | Code Grabber</title>
+            </Head>
+
+            <div className="text-center pt-10">
+                <h1 className='text-3xl my-2'>Sorry, No Such Blog Found...!</h1>
+                <div className='w-full flex justify-center mt-10'>
+                    <Image alt='Not-found' src="/Assets/Not Found.svg" height={200} width={200} />
+                </div>
+            </div>
+            </>
+        )
+    }
+
     return (
         <>
         <Head>
-            <title>{data ? data.title : "Not Found"} | Code Grabber</title>
+            <title>{data.title} | Code Grabber</title>
             <meta name="title" content={data.title} />
             <meta name="description" content={data.description} />
             <meta name="keywords" content={data.tags.join(", ")} />
-            <meta name="robots" content="index, follow" />
-            <meta name="language" content="English" />
-            <meta name="revisit-after" content="12 days" />
             <meta name="author" content={data.user?.displayName} />
 
             <meta property="og:title" content={data.title} />
@@ -28,17 +43,9 @@ const Blog = ({ data, auth }) => {
             <meta property="whatsapp:title" content={data.title} />
             <meta property="whatsapp:description" content={data.description} />
             <meta property="whatsapp:image" content={data.img} />
-
-            <link rel="manifest" href="/manifest.webmanifest" />
         </Head>
         
-        {data ? <BlogRender data={data} user={user} />
-        :   <div className="text-center my-10">
-            <h1 className='text-3xl'>Sorry, No Such Blog Found...!</h1>
-            <div className='w-full flex justify-center mt-10'>
-                <img src="/Assets/Not Found.svg" className='h-96' />
-            </div>
-        </div>}
+        <BlogRender data={data} user={user} />
         
         </>
     )

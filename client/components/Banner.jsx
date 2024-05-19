@@ -36,7 +36,7 @@ export const BannerPost = ({ title, img, description, tags })=> {
     
     return (
         <section id="Banner" className='w-screen h-96 relative bg-cdek-black text-white'>
-            {img && <img src={img} loading="lazy" alt="" className="h-full w-full object-cover" />}
+            {img && <Image src={img} alt="" sizes="20vw" layout="fill" objectFit="cover" />}
             <div className="absolute h-full w-full top-0 bg-cdek-black bg-opacity-70"></div>
             <div className="absolute h-full w-full top-0 grid place-content-center">
                 <div className='text-center max-w-2xl'>
