@@ -8,13 +8,22 @@ import useInitialLoad from '../../client/hooks/initialLoad'
 
 export default function Page({ recentPosts, popularPosts, auth }) {
 
-    const [query, setQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
 
     const initialLoad = useInitialLoad();
+
+
+    useEffect(()=> {
+        // fetch search results based on req query
+        const url = new URL(window.location.href);
+        const query = url.searchParams.get('q');
+        if(query) {
+            handleSearch(query);
+        }    
+    }, [])
     
 
-    const handleSearch = ()=> {
+    const handleSearch = (query)=> {
         fetch(`/api/blogs/search-blogs?q=${query}`)
         .then(res=> res.json())
         .then(data=> {
@@ -36,8 +45,8 @@ export default function Page({ recentPosts, popularPosts, auth }) {
         <BannerPost 
             title="Blogs Page" 
         />
-        <div className='w-full grid place-items-center'>
-            {/* Search bar */}
+        {/* Search bar */}
+        {/* <div className='w-full grid place-items-center'>
             <div className='w-fit border border-cdek-gray rounded-full flex my-2'>
                 <input 
                     className='py-2 px-4 outline-none bg-transparent' 
@@ -50,11 +59,11 @@ export default function Page({ recentPosts, popularPosts, auth }) {
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </div>
-        </div>
+        </div> */}
 
         {
             searchResults ? 
-                <Posts title="Search Results" posts={searchResults} />
+                <Posts title={`Search Results for "${new URL(window.location.href).searchParams.get("q")}"`} posts={searchResults} />
             :
                 null
         }

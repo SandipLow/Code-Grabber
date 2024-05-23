@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useRouter } from 'next/router';
 
 function Navbar({ auth }) {
+    const router = useRouter();
 
     return (
         <>
@@ -17,8 +18,18 @@ function Navbar({ auth }) {
                     : <Link href='/admin' passHref><li className='cursor-pointer px-4 transition p-2 hover:bg-slate-300 hover:text-black '>Admin</li></Link>
                 }
             </ul>
-            <div className='hidden md:block md:h-10 md:p-1 w-12 relative'>
-                <Image src="/manifest/code_grabber.svg" alt="logo" layout="fill" objectFit="contain" objectPosition="center" />
+            <div className='hidden md:flex relative'>
+                <input 
+                    type="text" 
+                    placeholder='Search blogs here' 
+                    className='px-4 mx-4 outline-none' 
+                    onKeyDown={(e)=>{
+                        if(e.key === 'Enter') {
+                            router.push(`/blogs?q=${e.target.value}`)
+                        }
+                    }} 
+                />
+                <Image src="/manifest/code_grabber.svg" alt="logo" height={40} width={40} objectFit="contain" objectPosition="center" />
             </div>
         </nav>
         </>

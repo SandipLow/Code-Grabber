@@ -69,9 +69,9 @@ export default function MyApp({ Component, pageProps }) {
       <meta name="google-site-verification" content="BTcyYqfgbgf6Jn765uP8EzKXB4-2I4AD0_QcJgfXOHc" />
       <meta name="robots" content="index, follow" />
       <meta name="language" content="English" />
-      <meta name="revisit-after" content="12 days" />
+      <meta name="revisit-after" content="7 days" />
       <meta name="creator" content="Sandip Low" />
-      <meta name="publisher" content="CDEK co." />
+      <meta name="publisher" content="CDEK c/o" />
       <meta name="format-detection" content="telephone=no, address=no, email=no" />
     
     </Head>
