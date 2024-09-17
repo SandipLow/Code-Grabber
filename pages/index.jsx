@@ -1,9 +1,8 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import { BannerHome } from '../client/components/Banner';
 import Image from 'next/image';
 
 export default function Home() {
-
   return (
     <>
       <Head>
@@ -16,56 +15,52 @@ export default function Home() {
         <link rel="canonical" href="https://codegrabber.vercel.app" />
       </Head>
 
+      {/* Main Banner */}
       <BannerHome />
 
-      <h1 className="font-bebas-neue text-4xl pl-4 mt-12" >Core Features</h1><hr className="mb-2" />
+      {/* Core Features Section */}
+      <section className="max-w-7xl mx-auto text-center mt-12 px-4">
+        <h1 className="font-bebas-neue text-5xl text-cdek-aqua mb-6">Core Features</h1>
+        <hr className="border-cdek-aqua mb-8" />
 
-      <section className="grid justify-items-center w-full p-4 mt-12">
-        <div className='max-w-7xl text-left w-full flex flex-wrap justify-evenly items-center'>
-          <div className='p-4 mx-2 flex-grow text-center rounded-lg bg-slate-200'>
-            <Image 
-              className='h-96 w-72 object-cover inline-block' 
-              src="/Assets/upload.webp" 
-              alt="upload" 
-              width={288} // replace with your desired width
-              height={384} // replace with your desired height
+        {/* Feature 1 */}
+        <div className="grid md:grid-cols-2 gap-8 items-center mb-16">
+          <div className='rounded-lg overflow-hidden shadow-lg bg-gray-100'>
+            <Image
+              src="/Assets/upload.webp"
+              alt="upload"
+              width={400}
+              height={500}
+              className='object-cover h-full w-full'
             />
           </div>
-          <div className='p-4 mx-2 flex-grow'>
-            <h2 className=' font-bold text-2xl mb-4'>
-              Built in online Asset manager
-            </h2>
-            <p>
-              Manage assets and images for your blog with our built in asset manager. Get free storage upto 1GB.
+          <div className='text-left'>
+            <h2 className='font-roboto-flex font-bold text-3xl text-gray-800 mb-4'>Built-in Online Asset Manager</h2>
+            <p className='text-lg text-gray-700'>
+              Manage assets and images for your blog with our built-in asset manager. Get free storage up to 1GB, making it easier to keep your blog organized.
             </p>
           </div>
         </div>
-      </section>
 
-      <section className="grid justify-items-center w-full p-4 mt-12">
-        <div className='max-w-7xl text-left w-full flex flex-wrap justify-evenly items-center'>
-          <div className='p-4 mx-2 flex-grow'>
-            <h2 className=' font-bold text-2xl mb-4'>
-              Markdown support for writing blogs
-            </h2>
-            <p>
-              Write blogs in markdown and get it converted to HTML on the fly. No need to learn HTML.
+        {/* Feature 2 */}
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className='text-left order-2 md:order-1'>
+            <h2 className='font-roboto-flex font-bold text-3xl text-gray-800 mb-4'>Markdown Support for Writing Blogs</h2>
+            <p className='text-lg text-gray-700'>
+              Write blogs in markdown and get them converted to HTML on the fly. No need to worry about learning HTML, just focus on your content.
             </p>
           </div>
-          <div className='p-4 mx-2 flex-grow text-center rounded-lg bg-slate-200'>
-            <Image 
-              src="/Assets/markdown_support.png" 
-              alt="md" 
-              width={384} // replace with your desired width
-              height={288} // replace with your desired height
-              className='object-cover inline-block'
+          <div className='rounded-lg overflow-hidden shadow-lg bg-gray-100 order-1 md:order-2'>
+            <Image
+              src="/Assets/markdown_support.png"
+              alt="Markdown Support"
+              width={500}
+              height={400}
+              className='object-cover h-full w-full'
             />
           </div>
         </div>
       </section>
-
     </>
-  )
+  );
 }
-
-
